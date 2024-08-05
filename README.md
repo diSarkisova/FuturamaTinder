@@ -1,5 +1,28 @@
-# Vue 3 + Vite
+# Futurama Tinder
+Application for dating Futurama characters
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+## Node Version
+    node v20.16.0
 
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+## Менеджер пакетов
+
+Рекомендованный менеджер пакетов npm
+
+## Installation
+#### To get up and running, follow these steps:
+#### Clone repository
+    # git clone hhttps://github.com/diSarkisova/FuturamaTinder.git
+#### Install dependencies
+    npm install
+#### Run the project
+    npm run dev
+
+## Features
+An application with the possibility of random appearance of a character, an analogue of the well-known dating application, its distinctive feature is that you can swipe and the character will appear on the Favorites page and there is also a character’s personal account
+
+### Author
+
+| Имя   | Фамилия   | Рабочая почта                                | telegram      |
+|-------|-----------|----------------------------------------------|---------------|
+| Diana | Sarkisova | [mail](diana.sarkisova1999@gmail.com) | @di.sarkisova | 
+ 
