@@ -1,37 +1,40 @@
-body {
-  font-family: Inter, sans-serif;
-  width: 100%;
-}
+@import './variables/variables.scss';
 
-h1,h2,h3,h4,h5 {
-  margin: 0;
-}
+  body {
+    font-family:  $font-inter;
+    width: 100%;
+  }
 
-p {
-  margin: 0;
-}
+  h1, h2, h3, h4, h5 {
+    margin: 0;
+  }
 
-* {
-  box-sizing: border-box;
-}
+  p {
+    margin: 0;
+  }
 
-a {
-  text-decoration: none;
-}
+  * {
+    box-sizing: border-box;
+  }
 
-button {
-  margin: 0;
-  padding: 0;
-  background-color: transparent;
-  border: 1px solid transparent;
-}
-ul {
-  padding: 0;
-  margin: 0;
-  list-style: none;
-}
+  a {
+    text-decoration: none;
+  }
 
-li {
-  border: 0;
-  margin: 0;
-}
+  button {
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    border: 1px solid transparent;
+  }
+
+  ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  li {
+    border: 0;
+    margin: 0;
+  }
