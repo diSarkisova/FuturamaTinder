@@ -1,12 +1,22 @@
 # Futurama Tinder
-Application for dating Futurama characters
+Application for dating Futurama's characters
+
+## Features
+An application with the possibility of random appearance of a character, an analogue of the well-known dating application, its distinctive feature is that you can swipe and the character will appear on the Favorites page and there is also a character’s personal account
+
 
 ## Node Version
-    node v20.16.0
+node v20.16.0
 
 ## Deployment
+#### To get up and running, follow these steps:
 
-### Checking the correct version of node
+### 1. Installation
+
+#### Clone repository
+    git clone https://github.com/diSarkisova/FuturamaTinder.git
+
+### 2. Checking the correct version of node
 In the terminal, enter the command to check the current version of node
 ```sh
 nvm current
@@ -22,7 +32,7 @@ nvm use 20.16.0 || nvm use lts/iron
 
 And we check again
 ```sh
-$ nvm current
+ nvm current
 ```
 
 expect
@@ -30,13 +40,9 @@ expect
  v20.16.0
 ```
 
-## Installation
-#### To get up and running, follow these steps:
-#### Clone repository
-    # git clone hhttps://github.com/diSarkisova/FuturamaTinder.git
-#### Install dependencies
+### 3. Install dependencies
     npm install
-#### Run the project
+### 4. Run the project
     npm run dev
 
 ## Stack
@@ -49,11 +55,9 @@ expect
 * Vue-router
 * Vuex
 
-## Features
-An application with the possibility of random appearance of a character, an analogue of the well-known dating application, its distinctive feature is that you can swipe and the character will appear on the Favorites page and there is also a character’s personal account
 
 ### Author
-| Имя   | Фамилия   | Рабочая почта                                | telegram      |
-|-------|-----------|----------------------------------------------|---------------|
+| Name  | Surname   | Email                                 | Telegram      |
+|-------|-----------|---------------------------------------|---------------|
 | Diana | Sarkisova | [mail](diana.sarkisova1999@gmail.com) | @di.sarkisova | 
  
