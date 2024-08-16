@@ -1,37 +1,38 @@
 body {
-  font-family: Inter, sans-serif;
-  width: 100%;
-}
+    font-family:  $font-inter;
+    width: 100%;
+  }
 
-h1,h2,h3,h4,h5 {
-  margin: 0;
-}
+  h1, h2, h3, h4, h5 {
+    margin: 0;
+  }
 
-p {
-  margin: 0;
-}
+  p {
+    margin: 0;
+  }
 
-* {
-  box-sizing: border-box;
-}
+  * {
+    box-sizing: border-box;
+  }
 
-a {
-  text-decoration: none;
-}
+  a {
+    text-decoration: none;
+  }
 
-button {
-  margin: 0;
-  padding: 0;
-  background-color: transparent;
-  border: 1px solid transparent;
-}
-ul {
-  padding: 0;
-  margin: 0;
-  list-style: none;
-}
+  button {
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    border: 1px solid transparent;
+  }
 
-li {
-  border: 0;
-  margin: 0;
-}
+  ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  li {
+    border: 0;
+    margin: 0;
+  }

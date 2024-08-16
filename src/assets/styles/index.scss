@@ -1,4 +1,7 @@
-@import url("main.scss");
-@import url("normalize.scss");
-@import url("./variables/variables.scss");
-@import url("../fonts/Inter/stylesheet.css");
+@import '../fonts/Inter/stylesheet.css';
+@import './variables/variables.scss';
+@import 'normalize.scss';
+@import 'mixins.scss';
+@import 'main.scss';
+
+
