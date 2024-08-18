@@ -1,11 +1,6 @@
-<script setup>
-
-</script>
-
 <template>
-<div></div>
+  <div>Favorties страницы</div>
 </template>
 
-<style scoped>
-
-</style>
+<script setup></script>
+<style scoped></style>

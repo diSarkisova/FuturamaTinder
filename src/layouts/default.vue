@@ -11,7 +11,6 @@
       </div>
     </header>
     <main class="default-layout__main">
-      Привет
       <slot></slot>
     </main>
   </div>
