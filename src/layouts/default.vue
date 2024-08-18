@@ -19,7 +19,7 @@
 
 <script setup>
 import TheLogo from "../components/TheLogo.vue";
-import TheIcon from "../components/icons/TheIcon.vue";
+import TheIcon from "../components/CirclePrewiev.vue";
 </script>
 
 <style lang="scss" scoped>
