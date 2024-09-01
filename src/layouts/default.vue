@@ -1,15 +1,18 @@
 <template>
   <div class="default-layout">
     <header class="default-layout__header">
-      <div class="default-layout__wrapper">
-        <TheLogo />
-        <router-link to="/">Futurama Tinder</router-link>
-      </div>
+      <router-link class="default-layout__wrapper" to="/">
+        <TheLogo />Futurama Tinder
+      </router-link>
+
       <div class="default-layout__container">
         <router-link to="/favorites">Favorites</router-link>
-        <TheIcon />
+        <router-link to="/profile">
+          <circle-preview icon=""></circle-preview
+        ></router-link>
       </div>
     </header>
+
     <main class="default-layout__main">
       <slot></slot>
     </main>
@@ -18,10 +21,12 @@
 
 <script setup>
 import TheLogo from "../components/TheLogo.vue";
-import TheIcon from "../components/CirclePrewiev.vue";
+import CirclePreview from "../components/CirclePreview.vue";
 </script>
 
 <style lang="scss" scoped>
+@import "../assets/styles/variables/variables.scss";
+
 .default-layout {
   display: flex;
   flex-direction: column;
@@ -36,6 +41,7 @@ import TheIcon from "../components/CirclePrewiev.vue";
     left: 0;
     right: 0;
     top: 0;
+    background: linear-gradient(to bottom right, $green-400, #caded0);
   }
 
   &__wrapper {
@@ -45,7 +51,6 @@ import TheIcon from "../components/CirclePrewiev.vue";
     height: 100%;
     width: 100%;
     padding: 20px;
-    background-color: yellow;
   }
 
   &__container {
@@ -55,13 +60,13 @@ import TheIcon from "../components/CirclePrewiev.vue";
     height: 100%;
     width: 100%;
     padding: 20px;
-    background-color: yellow;
-    gap: 10px;
+    gap: 30px;
   }
 
   &__main {
     width: 100%;
     background-color: #646cff;
+    padding: 20px;
   }
 }
 </style>
