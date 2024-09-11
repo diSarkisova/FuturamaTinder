@@ -16,5 +16,3 @@
   height: 78px;
 }
 </style>
-
-<!--<a :href="" class="logo__link">-->
