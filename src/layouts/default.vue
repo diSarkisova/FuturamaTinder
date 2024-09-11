@@ -8,7 +8,7 @@
       <div class="default-layout__container">
         <router-link to="/favorites">Favorites</router-link>
         <router-link to="/profile">
-          <circle-preview icon=""></circle-preview
+          <circle-preview :icon></circle-preview
         ></router-link>
       </div>
     </header>
