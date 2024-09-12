@@ -3,4 +3,8 @@
 </template>
 
 <script setup></script>
-<style scoped></style>
+<style scoped>
+.overview {
+  width: 100%;
+}
+</style>
