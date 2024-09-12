@@ -1,5 +1,5 @@
 <template>
-  <div class="overview">Its a match page!</div>
+  <div class="overview">You may like them!</div>
 </template>
 
 <script setup></script>
