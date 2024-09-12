@@ -1,13 +1,15 @@
 import { createRouter, createWebHistory } from "vue-router";
 
-import Favorites from "../pages/FavoritesPage.vue";
-import MainPage from "../pages/MainPage.vue";
-import Profile from "../pages/Profile.vue";
+import overview from "../pages/overview.vue";
+import favorites from "../pages/favorites.vue";
+// import [id] from "../pages/favorites/[id]"
+import profile from "../pages/profile.vue";
 
 const routes = [
-  { path: "/", component: MainPage },
-  { path: "/favorites", component: Favorites },
-  { path: "/profile", component: Profile },
+  { path: "/", component: overview },
+  { path: "/favorites", component: favorites },
+  // { path: "/id", component: id },
+  { path: "/profile", component: profile },
 ];
 
 export default createRouter({
