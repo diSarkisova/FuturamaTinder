@@ -7,6 +7,4 @@
   width: 100%;
 }
 </style>
-<script setup>
-import CirclePreview from "../components/CirclePreview.vue";
-</script>
+<script setup></script>
