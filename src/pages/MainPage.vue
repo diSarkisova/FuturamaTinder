@@ -1,16 +1,5 @@
 <template>
-  <div class="main-page">
-    <button>fhf</button>
-    <button>fhf</button>
-    <button>fhf</button>
-    <button>fhf</button>
-    <button>fhf</button>
-    <button>fhf</button>
-    <button>fhf</button><button>fhf</button>
-    <button>fhf</button>
-    <button>fhf</button>
-    <button>fhf</button>
-  </div>
+  <div class="main-page">Mainpage страницы</div>
 </template>
 <script setup></script>
 <style scoped>

@@ -1,5 +1,5 @@
 <template>
-  <div class="icon">Иконка</div>
+  <div class="favorites">Favorties страницы</div>
 </template>
 
 <script setup></script>
