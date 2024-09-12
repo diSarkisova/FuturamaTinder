@@ -21,7 +21,7 @@
 
 <script setup>
 import TheLogo from "../components/TheLogo.vue";
-import CirclePreview from "../components/CirclePreview.vue";
+import circlePreview from "../components/circlePreview.vue";
 </script>
 
 <style lang="scss" scoped>
@@ -30,8 +30,6 @@ import CirclePreview from "../components/CirclePreview.vue";
 .default-layout {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  height: 100%;
 
   &__header {
     display: flex;
@@ -67,6 +65,7 @@ import CirclePreview from "../components/CirclePreview.vue";
     width: 100%;
     background-color: #646cff;
     padding: 20px;
+    min-height: 100dvh;
   }
 }
 </style>
