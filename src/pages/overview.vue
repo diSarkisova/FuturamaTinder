@@ -1,5 +1,5 @@
 <template>
-  <div class="favorites">Favorties страницы</div>
+  <div class="overview">Its a match page!</div>
 </template>
 
 <script setup></script>
