@@ -1,13 +1,14 @@
 export default {
-  state: () => ({
-    characters: "null",
-  }),
+  state: {
+    characters: [],
+  },
   mutations: {
     SET_CHARACTERS(state, characters) {
       state.characters = characters;
     },
   },
   actions: {
+    // Получаем данные из API
     async fetchCharacters({ commit }) {
       try {
         const response = await fetch(
@@ -16,11 +17,20 @@ export default {
             method: "GET",
           },
         );
-        const characters = await response.json();
-        commit("SET_CHARACTERS", characters);
-      } catch (e) {
-        console.log(e);
+
+        // Перевели данные в формат JSON
+        const charactersJson = await response.json();
+        console.log("Fetched characters JSON", charactersJson); // сработал!!!
+
+        commit("SET_CHARACTERS", charactersJson);
+      } catch (error) {
+        console.error("Error fetching character images:", error);
       }
+    },
+  },
+  getters: {
+    getCharacters(state) {
+      return state.characters;
     },
   },
 };

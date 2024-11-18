@@ -39,7 +39,7 @@ import circlePreview from "../components/circlePreview.vue";
     left: 0;
     right: 0;
     top: 0;
-    background: linear-gradient(to bottom right, $green-400, #caded0);
+    background: linear-gradient(to bottom left, rgb(209, 255, 26), #caded0);
   }
 
   &__wrapper {
@@ -63,7 +63,9 @@ import circlePreview from "../components/circlePreview.vue";
 
   &__main {
     width: 100%;
-    background-color: #646cff;
+    //background-color: #646cff;
+    //background: linear-gradient(to bottom left, rgb(209, 255, 26), #caded0);
+    background: linear-gradient(to bottom right, $grey-200, #caded0);
     padding: 20px;
     min-height: 100dvh;
   }
