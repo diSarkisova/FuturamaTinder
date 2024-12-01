@@ -37,7 +37,7 @@ const characters = ref([]);
 
 onMounted(() => {
   store.dispatch("fetchCharacters"); // Получаем изображения
-  characters.value = store.getters.getCharacters; // Заполняем массив
+  characters.value = store.getters.allCharacters; // Заполняем массив
 
   console.log("characters in favorites", characters);
 });
