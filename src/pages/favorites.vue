@@ -1,47 +1,9 @@
 <template>
   <div class="favorites">
     <h2>Favorite partners</h2>
-    <ul class="favorite__grid-container">
-      <li
-        class="favorite__grid-wrapper"
-        v-for="item in characters"
-        :key="item.id"
-      >
-        <img
-          :src="item.images.main"
-          alt="Character Image"
-          class="favorite__character-image"
-        />
-        {{ item.name }}
-        <router-link
-          class="favorite__character"
-          :to="`/favorites/${item.id}`"
-          >{{ item.id }}</router-link
-        >
-      </li>
-    </ul>
   </div>
 </template>
-<script setup>
-// const favoritePartners = [
-//   { id: 1, name: "Partner 1" },
-//   { id: 2, name: "Partner 2" },
-//   { id: 3, name: "Partner 3" },
-//   { id: 4, name: "Partner 4" },
-// ];
-
-import { useStore } from "vuex";
-import { ref, onMounted, computed } from "vue";
-const store = useStore();
-const characters = ref([]);
-
-onMounted(() => {
-  store.dispatch("fetchCharacters"); // Получаем изображения
-  characters.value = store.getters.allCharacters; // Заполняем массив
-
-  console.log("characters in favorites", characters);
-});
-</script>
+<script setup></script>
 <style scoped lang="scss">
 .favorites {
   display: flex;

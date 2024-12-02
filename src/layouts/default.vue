@@ -2,11 +2,10 @@
   <div class="default-layout">
     <header class="default-layout__header">
       <router-link class="default-layout__wrapper" to="/">
-        <TheLogo />Futurama Tinder
+        <TheLogo />PlanetLove
       </router-link>
 
       <div class="default-layout__container">
-        <router-link to="/favorites">Favorites</router-link>
         <router-link to="/profile">
           <circle-preview></circle-preview
         ></router-link>
@@ -16,6 +15,11 @@
     <main class="default-layout__main">
       <slot></slot>
     </main>
+    <footer class="default-layout__footer">
+      <router-link class="mdi mdi-fire" to="/"></router-link>
+      <router-link to="/favorites" class="mdi mdi-heart"></router-link>
+      <router-link to="/favorites" class="mdi mdi-account"></router-link>
+    </footer>
   </div>
 </template>
 
@@ -30,16 +34,15 @@ import circlePreview from "../components/circlePreview.vue";
 .default-layout {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  background-image: url("../assets/images/background.png");
+  z-index: 1;
 
   &__header {
     display: flex;
     justify-content: space-between;
-    position: sticky;
-    height: 104px;
-    left: 0;
-    right: 0;
-    top: 0;
-    background: linear-gradient(to bottom left, rgb(209, 255, 26), #caded0);
+    padding: 20px 20px 0 20px;
   }
 
   &__wrapper {
@@ -48,7 +51,6 @@ import circlePreview from "../components/circlePreview.vue";
     align-items: center;
     height: 100%;
     width: 100%;
-    padding: 20px;
   }
 
   &__container {
@@ -57,17 +59,30 @@ import circlePreview from "../components/circlePreview.vue";
     align-items: center;
     height: 100%;
     width: 100%;
-    padding: 20px;
     gap: 30px;
   }
 
   &__main {
+    flex: 1;
     width: 100%;
-    //background-color: #646cff;
-    //background: linear-gradient(to bottom left, rgb(209, 255, 26), #caded0);
-    background: linear-gradient(to bottom right, $grey-200, #caded0);
     padding: 20px;
-    min-height: 100dvh;
+    overflow: auto;
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+    background-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0.8) 100%
+    );
+  }
+
+  .default-layout__footer .mdi {
+    font-size: 30px;
+    // color: #fff; /* Цвет иконок, если нужно */
   }
 }
 </style>
