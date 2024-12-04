@@ -7,10 +7,11 @@ export default {
   },
   mutations: {
     SET_ITEMS(state, items) {
-      state.items = items || [];
+      state.items = items || []; // Обновляем список персонажей
     },
     ADD_TO_FAVORITES(state, item) {
-      if (!state.favorites.includes(item)) {
+      // Проверяем уникальность по id (если у объектов есть уникальные id)
+      if (!state.favorites.some(fav => fav.id === item.id)) {
         state.favorites.push(item); // Добавляем персонажа в избранные
       }
     },
@@ -20,7 +21,12 @@ export default {
       try {
         const response = await fetch('https://futuramaapi.com/api/characters');
         const data = await response.json();
-        commit('SET_ITEMS', data.items); // Обновляем список персонажей
+
+        if (data && data.items) {
+          commit('SET_ITEMS', data.items); // Обновляем список персонажей
+        } else {
+          console.error('Данные с API не содержат свойства "items".');
+        }
       } catch (error) {
         console.error('Ошибка при загрузке данных:', error);
       }
@@ -31,16 +37,10 @@ export default {
   },
   getters: {
     getItems(state) {
-      return state.items;
-    },
-    getImages(state) {
-      return state.items.map(item => item.image);
-    },
-    getNames(state) {
-      return state.items.map(item => item.name);
+      return state.items; // Возвращаем все элементы из массива
     },
     getFavorites(state) {
-      return state.favorites;
+      return state.favorites; // Возвращаем все избранные элементы
     },
-  },
+  }
 };

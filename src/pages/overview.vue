@@ -11,20 +11,24 @@
       :cardsEffect="{ rotate: 10, slideShadows: true }"
       :speed="500"
       :touchRatio="1"
-      :scrollbar="{
-        hide: false,
-      }"
+      :scrollbar="{ hide: false }"
     >
       <swiper-slide
-        v-for="(image, index) in images"
+        v-for="(character, index) in characters"
         :key="index"
         class="overview__swiper-slide"
       >
         <div class="overview__image-container">
-          <img :src="image" :alt="'Image ' + index" class="overview__image" />
+          <img
+            :src="character.image"
+            :alt="'Image ' + index"
+            class="overview__image"
+          />
           <div class="overview__text-container">
-            <h2 class="overview__name">Имя</h2>
-            <p class="overview__description">Описание нашего персонажа</p>
+            <h2 class="overview__name">{{ character.name }}</h2>
+            <p class="overview__description">
+              species: {{ character.species || "Описание нашего персонажа" }}
+            </p>
             <div class="overview__buttons-container">
               <button
                 class="overview__button overview__button--close"
@@ -34,7 +38,7 @@
               </button>
               <button
                 class="overview__button overview__button--like"
-                @click="onclickLike(image)"
+                @click="onclickLike(character)"
               >
                 ❤
               </button>
@@ -54,42 +58,36 @@ import "swiper/swiper-bundle.css";
 import { EffectCards, Scrollbar } from "swiper/modules";
 
 const modules = [EffectCards, Scrollbar];
+
 // Получаем доступ к Vuex store
 const store = useStore();
-// Используем геттер для получения изображений
-const images = computed(() => store.getters["getImages"]);
-const names = computed(() => store.getters["getNames"]);
-// const favorites = computed(() => store.getters["getFavorites"]);
-const favorites = reactive([]);
-// const mySwiper = ref(null);
 
+// Используем геттер для получения списка персонажей
+const characters = computed(() => store.getters["getItems"]); // Получаем все элементы
+
+// Функция для загрузки персонажей
 async function dispatchCharacters() {
-  console.log("Проверка функция dispatchCharacters");
-  await store.dispatch("fetchItems");
-}
-
-function onclickLike(item) {
-  if (!favorites.includes(item)) {
-    favorites.push(item); // Добавление элемента в массив
-    console.log("favorites", favorites);
-  } else {
-    console.log("Этот элемент уже в избранном.");
+  try {
+    await store.dispatch("fetchItems");
+  } catch (error) {
+    console.error("Ошибка при загрузке данных", error);
   }
 }
 
+// Функция для добавления персонажа в избранное
+function onclickLike(character) {
+  // Добавляем персонажа в избранное через Vuex
+  store.dispatch("addToFavorites", character);
+}
+
+// // Функция для перехода к следующему слайду (если нужно)
 // function goToNextSlide() {
-//   if (mySwiper.value) {
-//     mySwiper.value.slideNext();
-//   }
+
 // }
 
 // Загружаем данные из API при монтировании компонента
 onMounted(() => {
-  try {
-    dispatchCharacters();
-  } catch (error) {
-    console.error("Ошибка при загрузке первичных данных", error);
-  }
+  dispatchCharacters();
 });
 </script>
 
