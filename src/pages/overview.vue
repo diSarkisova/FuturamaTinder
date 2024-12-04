@@ -4,7 +4,7 @@
       :effect="'cards'"
       :grabCursor="true"
       :modules="modules"
-      class="mySwiper"
+      class="overview__swiper"
       :spaceBetween="50"
       :slidesPerView="1"
       :centeredSlides="true"
@@ -15,115 +15,186 @@
         hide: false,
       }"
     >
-      <swiper-slide v-for="(image, index) in images" :key="index">
-        <img :src="image" :alt="'Image ' + index" />
+      <swiper-slide
+        v-for="(image, index) in images"
+        :key="index"
+        class="overview__swiper-slide"
+      >
+        <div class="overview__image-container">
+          <img :src="image" :alt="'Image ' + index" class="overview__image" />
+          <div class="overview__text-container">
+            <h2 class="overview__name">Имя</h2>
+            <p class="overview__description">Описание нашего персонажа</p>
+            <div class="overview__buttons-container">
+              <button
+                class="overview__button overview__button--close"
+                @click="goToNextSlide"
+              >
+                ✖
+              </button>
+              <button
+                class="overview__button overview__button--like"
+                @click="onclickLike(image)"
+              >
+                ❤
+              </button>
+            </div>
+          </div>
+        </div>
       </swiper-slide>
     </swiper>
   </div>
 </template>
 
 <script setup>
-import { computed, onMounted } from "vue";
+import { computed, onMounted, reactive } from "vue";
 import { useStore } from "vuex";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/swiper-bundle.css";
 import { EffectCards, Scrollbar } from "swiper/modules";
 
 const modules = [EffectCards, Scrollbar];
-
 // Получаем доступ к Vuex store
 const store = useStore();
+// Используем геттер для получения изображений
+const images = computed(() => store.getters["getImages"]);
+const names = computed(() => store.getters["getNames"]);
+// const favorites = computed(() => store.getters["getFavorites"]);
+const favorites = reactive([]);
+// const mySwiper = ref(null);
 
 async function dispatchCharacters() {
   console.log("Проверка функция dispatchCharacters");
   await store.dispatch("fetchItems");
 }
 
+function onclickLike(item) {
+  if (!favorites.includes(item)) {
+    favorites.push(item); // Добавление элемента в массив
+    console.log("favorites", favorites);
+  } else {
+    console.log("Этот элемент уже в избранном.");
+  }
+}
+
+// function goToNextSlide() {
+//   if (mySwiper.value) {
+//     mySwiper.value.slideNext();
+//   }
+// }
+
 // Загружаем данные из API при монтировании компонента
 onMounted(() => {
   try {
     dispatchCharacters();
   } catch (error) {
-    console.error("Ошибка при загрузке данных:", error);
+    console.error("Ошибка при загрузке первичных данных", error);
   }
 });
-
-// Используем геттер для получения изображений
-const images = computed(() => store.getters["getImages"]);
 </script>
-<style scoped>
-.mySwiper {
-  width: 100%; /* Устанавливаем ширину слайдера */
-  height: 460px; /* Устанавливаем высоту слайдера */
-}
 
-.swiper-slide {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  width: 100%;
-  height: 100%;
-  border-radius: 18px;
-  font-size: 22px;
-  font-weight: bold;
-  color: #fff;
-  transition: transform 0.5s ease, opacity 0.5s ease;
-}
-
-swiper-slide img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 18px;
-}
-
+<style lang="scss" scoped>
 .overview {
-  width: 100%; /* Задаем ширину для компонента */
-  max-width: 800px; /* Максимальная ширина слайдера */
-  margin: 0 auto; /* Центрируем контейнер */
-  overflow: hidden; /* Скрываем все, что выходит за рамки */
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  overflow: hidden;
   position: relative;
-}
 
-/* Эффект для смены цвета фона карточек */
-.swiper-slide:nth-child(1n) {
-  background-color: rgb(206, 17, 17);
-}
+  &__swiper {
+    width: 100%;
+    height: 460px;
+    position: relative;
+  }
 
-.swiper-slide:nth-child(2n) {
-  background-color: rgb(0, 140, 255);
-}
+  &__swiper-slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 18px;
+    font-size: 22px;
+    font-weight: bold;
+    color: #fff;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+  }
 
-.swiper-slide:nth-child(3n) {
-  background-color: rgb(10, 184, 111);
-}
+  &__image-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 18px;
+    overflow: hidden;
+  }
 
-.swiper-slide:nth-child(4n) {
-  background-color: rgb(211, 122, 7);
-}
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 
-.swiper-slide:nth-child(5n) {
-  background-color: rgb(118, 163, 12);
-}
+  &__text-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px;
+    background-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0.8) 100%
+    );
+    color: white;
+    font-size: 16px;
+    text-align: center;
+    border-radius: 0 0 18px 18px;
+  }
 
-.swiper-slide:nth-child(6n) {
-  background-color: rgb(180, 10, 47);
-}
+  &__name {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
 
-.swiper-slide:nth-child(7n) {
-  background-color: rgb(35, 99, 19);
-}
+  &__description {
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
 
-.swiper-slide:nth-child(8n) {
-  background-color: rgb(0, 68, 255);
-}
+  &__buttons-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 0 10px 0;
+    gap: 40px;
+  }
 
-.swiper-slide:nth-child(9n) {
-  background-color: rgb(218, 12, 218);
-}
+  &__button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    background-color: transparent;
+    color: #fff;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
 
-.swiper-slide:nth-child(10n) {
-  background-color: rgb(54, 94, 77);
+    &--close {
+      border-color: red;
+    }
+
+    &--like {
+      border-color: rgb(76 214 181);
+    }
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.2); /* Легкое затемнение фона */
+    }
+  }
 }
 </style>

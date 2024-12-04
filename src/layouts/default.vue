@@ -2,7 +2,7 @@
   <div class="default-layout">
     <header class="default-layout__header">
       <router-link class="default-layout__wrapper" to="/">
-        <TheLogo />PlanetLove
+        <TheLogo />FuturamaMatch
       </router-link>
 
       <div class="default-layout__container">
@@ -82,7 +82,6 @@ import circlePreview from "../components/circlePreview.vue";
 
   .default-layout__footer .mdi {
     font-size: 30px;
-    // color: #fff; /* Цвет иконок, если нужно */
   }
 }
 </style>

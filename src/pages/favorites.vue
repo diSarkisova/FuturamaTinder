@@ -1,9 +1,21 @@
 <template>
   <div class="favorites">
     <h2>Favorite partners</h2>
+    <div v-for="fav in favorites" :key="index">
+      <img :src="fav.value" />Картиночка
+    </div>
   </div>
 </template>
-<script setup></script>
+
+<script setup>
+defineProps({
+  favorites: {
+    type: Array,
+    required: true,
+  },
+});
+</script>
+
 <style scoped lang="scss">
 .favorites {
   display: flex;
