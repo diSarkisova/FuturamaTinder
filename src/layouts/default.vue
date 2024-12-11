@@ -18,7 +18,7 @@
     <footer class="default-layout__footer">
       <router-link class="mdi mdi-fire" to="/"></router-link>
       <router-link to="/favorites" class="mdi mdi-heart"></router-link>
-      <router-link to="/favorites" class="mdi mdi-account"></router-link>
+      <router-link to="/profile" class="mdi mdi-account"></router-link>
     </footer>
   </div>
 </template>

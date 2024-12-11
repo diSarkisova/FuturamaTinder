@@ -51,7 +51,7 @@
 </template>
 
 <script setup>
-import { computed, onMounted, reactive } from "vue";
+import { computed, onMounted } from "vue";
 import { useStore } from "vuex";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/swiper-bundle.css";
@@ -63,31 +63,16 @@ const modules = [EffectCards, Scrollbar];
 const store = useStore();
 
 // Используем геттер для получения списка персонажей
-const characters = computed(() => store.getters["getItems"]); // Получаем все элементы
-
-// Функция для загрузки персонажей
-async function dispatchCharacters() {
-  try {
-    await store.dispatch("fetchItems");
-  } catch (error) {
-    console.error("Ошибка при загрузке данных", error);
-  }
-}
+const characters = computed(() => store.getters.getItems); // Получаем все элементы
 
 // Функция для добавления персонажа в избранное
 function onclickLike(character) {
-  // Добавляем персонажа в избранное через Vuex
-  store.dispatch("addToFavorites", character);
+  store.dispatch("addToFavorites", character); // Добавляем персонажа в избранное
 }
 
-// // Функция для перехода к следующему слайду (если нужно)
-// function goToNextSlide() {
-
-// }
-
-// Загружаем данные из API при монтировании компонента
 onMounted(() => {
-  dispatchCharacters();
+  store.dispatch("fetchItems"); // Загружаем персонажей из API
+  store.dispatch("loadFavoritesFromLocalStorage"); // Загружаем избранных из localStorage
 });
 </script>
 

@@ -1,6 +1,6 @@
 import { createStore } from "vuex";
 
-export default {
+export default ({
   state: {
     items: [], // Персонажи, загруженные с API
     favorites: [], // Список избранных персонажей
@@ -14,6 +14,12 @@ export default {
       if (!state.favorites.some(fav => fav.id === item.id)) {
         state.favorites.push(item); // Добавляем персонажа в избранные
       }
+    },
+    REMOVE_FROM_FAVORITES(state, itemId) {
+      state.favorites = state.favorites.filter(fav => fav.id !== itemId); // Удаляем персонажа из избранного
+    },
+    SET_FAVORITES(state, favorites) {
+      state.favorites = favorites || []; // Загружаем избранных из localStorage
     },
   },
   actions: {
@@ -33,6 +39,20 @@ export default {
     },
     addToFavorites({ commit }, item) {
       commit('ADD_TO_FAVORITES', item); // Добавляем персонажа в избранное
+      this.dispatch('saveFavoritesToLocalStorage'); // Сохраняем избранных в localStorage
+    },
+    removeFromFavorites({ commit }, itemId) {
+      commit('REMOVE_FROM_FAVORITES', itemId); // Удаляем персонажа из избранного
+      this.dispatch('saveFavoritesToLocalStorage'); // Сохраняем избранных в localStorage
+    },
+    saveFavoritesToLocalStorage({ state }) {
+      localStorage.setItem('favorites', JSON.stringify(state.favorites)); // Сохраняем избранных в localStorage
+    },
+    loadFavoritesFromLocalStorage({ commit }) {
+      const savedFavorites = localStorage.getItem('favorites');
+      if (savedFavorites) {
+        commit('SET_FAVORITES', JSON.parse(savedFavorites)); // Загружаем избранных из localStorage
+      }
     },
   },
   getters: {
@@ -42,5 +62,5 @@ export default {
     getFavorites(state) {
       return state.favorites; // Возвращаем все избранные элементы
     },
-  }
-};
+  },
+});
