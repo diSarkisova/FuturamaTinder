@@ -1,10 +1,11 @@
 <template>
   <div class="favorites">
     <h2>Favorite partners</h2>
-    <input  
-    v-model="filterTable" 
-    placeholder="Search favorites">
-  </input>
+    <input
+      v-model="filterTable"
+      placeholder="Search favorites"
+      class="favorite__input"
+    />
 
     <div class="favorite__grid-container">
       <div
@@ -12,13 +13,13 @@
         :key="index"
         class="favorite__grid-wrapper"
       >
-        <div>
+        <div class="favorite__img-container">
           <img
             :src="fav.image"
             :alt="'Favorite image ' + index"
             class="favorite__image"
           />
-          <button class="favorite__close-btn">✖</button>
+          <TheButton :remove="() => removeFavorite(fav.id)" />
           <p>{{ fav.name }}</p>
         </div>
       </div>
@@ -29,6 +30,7 @@
 <script setup>
 import { computed, onMounted, ref } from "vue";
 import { useStore } from "vuex";
+import TheButton from "../ui/TheButton.vue";
 
 const store = useStore();
 
@@ -36,7 +38,7 @@ const filterTable = ref("");
 
 // Фильтрация избранных по имени
 const filteredFavorites = computed(() => {
-  return favorites.value.filter((favorite) => 
+  return favorites.value.filter((favorite) =>
     favorite.name.toLowerCase().includes(filterTable.value.toLowerCase())
   );
 });
@@ -46,8 +48,13 @@ const favorites = computed(() => store.getters.getFavorites);
 
 // Загружаем избранных из localStorage при монтировании компонента
 onMounted(() => {
-  store.dispatch("loadFavoritesFromLocalStorage"); // Загружаем избранных из localStorage
+  store.dispatch("loadFavoritesFromLocalStorage");
 });
+
+// Функция для удаления избранного
+const removeFavorite = (favoriteId) => {
+  store.dispatch("removeFromFavorites", favoriteId); // Удалить из Vuex store
+};
 </script>
 
 <style scoped lang="scss">
@@ -61,47 +68,43 @@ onMounted(() => {
 
 .favorite__grid-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Три столбца */
-  gap: 16px; /* Отступы между картинками */
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
   width: 100%;
 }
 
 .favorite__grid-wrapper {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.favorite__img-container {
+  position: relative;
 }
 
 .favorite__image {
   width: 100%;
   height: auto;
   object-fit: cover;
-  border-radius: 8px; /* Скругленные углы */
+  border-radius: 8px;
 }
 
-.close-button {
+.favorite__img-container .close-btn {
   position: absolute;
   top: 10px;
   right: 10px;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.5);
   color: white;
   border: none;
   border-radius: 50%;
-  font-size: 20px;
-  width: 30px;
-  height: 30px;
-  display: none;
-  justify-content: center;
-  align-items: center;
+  padding: 5px;
+  font-size: 18px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
 }
 
-.image-container:hover .close-button {
-  display: flex; /* Показать крестик при наведении на контейнер */
-}
-
-.close-button:hover {
-  background-color: red; /* Цвет фона крестика при наведении */
+.favorite__input {
+  width: 100%;
 }
 </style>
