@@ -51,6 +51,7 @@ import circlePreview from "../components/circlePreview.vue";
     align-items: center;
     height: 100%;
     width: 100%;
+    color: white;
   }
 
   &__container {

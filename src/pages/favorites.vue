@@ -1,6 +1,6 @@
 <template>
   <div class="favorites">
-    <h2>Favorite partners</h2>
+    <h2 class="favorite__name">Favorite partners</h2>
     <input
       v-model="filterTable"
       placeholder="Search favorites"
@@ -20,7 +20,7 @@
             class="favorite__image"
           />
           <TheButton :remove="() => removeFavorite(fav.id)" />
-          <p>{{ fav.name }}</p>
+          <p class="favorite__description">{{ fav.name }}</p>
         </div>
       </div>
     </div>
@@ -91,6 +91,41 @@ const removeFavorite = (favoriteId) => {
   border-radius: 8px;
 }
 
+.favorite__input {
+  width: 100%;
+  max-width: 500px;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: 2px solid #3a55ac;
+  border-radius: 50px;
+  outline: none;
+  background: linear-gradient(
+    45deg,
+    rgba(92, 107, 192, 0.5),
+    rgba(255, 255, 255, 0.2)
+  );
+  color: black;
+  transition: all 0.3s ease;
+}
+
+.favorite__input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.favorite__input:focus {
+  border-color: #5c6bc0; /* Цвет при фокусе */
+  background: linear-gradient(
+    45deg,
+    rgba(92, 107, 192, 0.7),
+    rgba(255, 255, 255, 0.4)
+  ); /* Интенсивный градиент при фокусе */
+  box-shadow: 0 0 8px rgba(92, 107, 192, 0.4); /* Легкая тень */
+}
+
+.favorite__input:focus::placeholder {
+  color: rgba(92, 107, 192, 1); /* Цвет плейсхолдера при фокусе */
+}
+
 .favorite__img-container .close-btn {
   position: absolute;
   top: 10px;
@@ -104,7 +139,11 @@ const removeFavorite = (favoriteId) => {
   cursor: pointer;
 }
 
-.favorite__input {
-  width: 100%;
+.favorite__name {
+  color: white;
+}
+
+.favorite__description {
+  color: white;
 }
 </style>
