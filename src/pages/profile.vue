@@ -1,8 +1,8 @@
 <template>
   <div class="profile">
     <TheLogo />
+    <img>Фото Пользователя</img>
     <h3>Имя пользователя</h3>
-    <img>Фото пользователя</img>
   </div>
 </template>
 

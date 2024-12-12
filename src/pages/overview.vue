@@ -166,14 +166,19 @@ onMounted(() => {
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease; /* Плавный переход для всех свойств */
+
+    &:active {
+      transform: scale(1.1); /* Увеличение кнопки при клике */
+      color: red;
+    }
 
     &--close {
       border-color: red;
     }
 
     &--like {
-      border-color: rgb(76 214 181);
+      border-color: rgb(76, 214, 181);
     }
 
     &:hover {

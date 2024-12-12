@@ -22,25 +22,35 @@ const emitRemove = () => {
   height: 24px;
   background-color: transparent; /* Прозрачный фон */
   cursor: pointer;
-}
+  transition: background-color 0.3s ease; /* Плавный переход для фона (при необходимости) */
 
-.close-btn:before,
-.close-btn:after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 12px;
-  height: 3px;
-  background-color: white;
-  transform: translate(-50%, -50%);
-}
+  &:before,
+  &:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 12px;
+    height: 3px;
+    background-color: white;
+    transform: translate(-50%, -50%);
+    transition: background-color 0.3s ease; /* Плавный переход для линий */
+  }
 
-.close-btn:before {
-  transform: translate(-50%, -50%) rotate(45deg);
-}
+  &:before {
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
 
-.close-btn:after {
-  transform: translate(-50%, -50%) rotate(-45deg);
+  &:after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+
+  /* Эффект при наведении */
+  &:hover {
+    &:before,
+    &:after {
+      background-color: red; /* Линии крестика становятся черными */
+    }
+  }
 }
 </style>

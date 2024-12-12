@@ -20,7 +20,9 @@
             class="favorites__image"
           />
           <TheButton @remove="removeFavorite(fav.id)" />
-          <p class="favorites__description">{{ fav.name }}</p>
+          <div class="favorites__text-overlay">
+            <p class="favorites__description">{{ fav.name }}</p>
+          </div>
         </div>
       </div>
     </div>
@@ -95,6 +97,28 @@ const removeFavorite = (favoriteId) => {
     border-radius: 8px;
   }
 
+  /* Контейнер для текста (имя) */
+  &__text-overlay {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    width: 100%;
+    padding: 5px;
+    background-color: rgba(0, 0, 0, 0.5); /* полупрозрачный фон для текста */
+    text-align: center;
+    border-radius: 0 0 8px 8px; /* Закругленные углы внизу */
+  }
+
+  &__name {
+    color: white;
+  }
+
+  &__description {
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+  }
+
   &__input {
     width: 100%;
     max-width: 500px;
@@ -128,14 +152,6 @@ const removeFavorite = (favoriteId) => {
 
   &__input:focus::placeholder {
     color: rgba(92, 107, 192, 1); /* Цвет плейсхолдера при фокусе */
-  }
-
-  &__name {
-    color: white;
-  }
-
-  &__description {
-    color: white;
   }
 }
 </style>
