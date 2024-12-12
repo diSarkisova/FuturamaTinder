@@ -1,6 +1,7 @@
 <template>
   <div class="overview">
     <swiper
+      :loop="true"
       :effect="'cards'"
       :grabCursor="true"
       :modules="modules"

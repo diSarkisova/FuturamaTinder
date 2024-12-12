@@ -83,6 +83,11 @@ import circlePreview from "../components/circlePreview.vue";
 
   &__footer .mdi {
     font-size: 30px;
+
+    &:hover {
+      color: red;
+      transition: color 0.3s ease;
+    }
   }
 }
 </style>

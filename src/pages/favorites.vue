@@ -78,16 +78,20 @@ const removeFavorite = (favoriteId) => {
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden; /* Чтобы избежать лишнего пространства */
   }
 
   &__img-container {
     position: relative;
+    width: 100%;
+    height: 250px; /* Высота для изображений */
+    overflow: hidden; /* Обрезать изображение, если оно выходит за пределы контейнера */
   }
 
   &__image {
     width: 100%;
-    height: auto;
-    object-fit: cover;
+    height: 100%;
+    object-fit: cover; /* Чтобы изображения не искажались, но заполнили весь контейнер */
     border-radius: 8px;
   }
 
@@ -124,19 +128,6 @@ const removeFavorite = (favoriteId) => {
 
   &__input:focus::placeholder {
     color: rgba(92, 107, 192, 1); /* Цвет плейсхолдера при фокусе */
-  }
-
-  &__img-container .close-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: rgba(0, 0, 0, 0.5);
-    color: white;
-    border: none;
-    border-radius: 50%;
-    padding: 5px;
-    font-size: 18px;
-    cursor: pointer;
   }
 
   &__name {
