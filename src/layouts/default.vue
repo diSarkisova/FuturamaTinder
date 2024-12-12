@@ -81,7 +81,7 @@ import circlePreview from "../components/circlePreview.vue";
     );
   }
 
-  .default-layout__footer .mdi {
+  &__footer .mdi {
     font-size: 30px;
   }
 }

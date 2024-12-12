@@ -1,20 +1,15 @@
 <template>
   <div class="primary-btn">
-    <button type="button" class="close-btn" @click="handleRemove"></button>
+    <button type="button" class="close-btn" @click="emitRemove"></button>
   </div>
 </template>
 
 <script setup>
-const props = defineProps({
-  // Передаем функцию для удаления
-  remove: Function,
-});
+const emit = defineEmits(["remove"]); // определяем событие remove
 
-const handleRemove = () => {
-  // Когда кнопка нажата, вызываем переданный метод
-  if (props.remove) {
-    props.remove();
-  }
+const emitRemove = () => {
+  // Генерируем событие удаления
+  emit("remove");
 };
 </script>
 
