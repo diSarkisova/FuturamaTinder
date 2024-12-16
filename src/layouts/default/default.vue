@@ -23,20 +23,26 @@
   </div>
 </template>
 
-<script setup>
-import TheLogo from "../components/TheLogo.vue";
-import circlePreview from "../components/circlePreview.vue";
+<script setup lang="ts">
+import TheLogo from "../../components/TheLogo.vue";
+import circlePreview from "../../components/circlePreview.vue";
+</script>
+
+<script lang="ts">
+export default {
+  name: "DefaultLayout",
+};
 </script>
 
 <style lang="scss" scoped>
-@import "../assets/styles/variables/variables.scss";
+@import "../../assets/styles/variables/variables.scss";
 
 .default-layout {
   display: flex;
   flex-direction: column;
   width: 100%;
   height: 100vh;
-  background-image: url("../assets/images/background.png");
+  background-image: url("../../assets/images/background.png");
   z-index: 1;
 
   &__header {
