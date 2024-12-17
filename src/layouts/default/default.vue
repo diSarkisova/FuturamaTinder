@@ -13,12 +13,13 @@
     </header>
 
     <main class="default-layout__main">
-      <slot></slot>
+      <RouterView />
     </main>
     <footer class="default-layout__footer">
       <router-link class="mdi mdi-fire" to="/"></router-link>
       <router-link to="/favorites" class="mdi mdi-heart"></router-link>
       <router-link to="/profile" class="mdi mdi-account"></router-link>
+      <router-link to="/login" class="mdi mdi-login"></router-link>
     </footer>
   </div>
 </template>

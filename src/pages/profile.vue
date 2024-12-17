@@ -6,10 +6,14 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import  TheLogo from '../components/TheLogo.vue'
+</script>
 
-
+<script lang="ts">
+export default {
+  name: 'Profile'
+};
 </script>
 
 <style scoped>

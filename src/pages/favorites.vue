@@ -30,7 +30,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed, onMounted, ref } from "vue";
 import { useStore } from "vuex";
 import TheButton from "../ui/TheButton.vue";
@@ -57,6 +57,12 @@ onMounted(() => {
 // Функция для удаления избранного
 const removeFavorite = (favoriteId) => {
   store.dispatch("removeFromFavorites", favoriteId); // Удалить из Vuex store
+};
+</script>
+
+<script lang="ts">
+export default {
+  name: "Favorites",
 };
 </script>
 

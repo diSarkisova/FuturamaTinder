@@ -51,7 +51,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed, onMounted } from "vue";
 import { useStore } from "vuex";
 import { Swiper, SwiperSlide } from "swiper/vue";
@@ -75,6 +75,12 @@ onMounted(() => {
   store.dispatch("fetchItems"); // Загружаем персонажей из API
   store.dispatch("loadFavoritesFromLocalStorage"); // Загружаем избранных из localStorage
 });
+</script>
+
+<script lang="ts">
+export default {
+  name: "Overview",
+};
 </script>
 
 <style lang="scss" scoped>
