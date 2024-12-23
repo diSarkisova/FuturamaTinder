@@ -20,6 +20,7 @@
       <router-link to="/favorites" class="mdi mdi-heart"></router-link>
       <router-link to="/profile" class="mdi mdi-account"></router-link>
       <router-link to="/login" class="mdi mdi-login"></router-link>
+      <router-link to="/register" class="mdi mdi-account-plus"></router-link>
     </footer>
   </div>
 </template>

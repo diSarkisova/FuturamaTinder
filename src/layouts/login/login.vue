@@ -4,20 +4,28 @@
     <h2>FuturamaMatch</h2>
     <h1>Sign In</h1>
 
-    <div class="login__layout-container">
-      <div class="input-container">
-        <label for="login" class="login__label">Введите логин</label>
-        <input v-model="login" placeholder="Логин" class="login__input" />
+    <form @submit.prevent="userAuth">
+      <div class="login__layout-container">
+        <div class="input-container">
+          <label for="login" class="login__label"> Логин</label>
+          <input
+            v-model="loginData.username"
+            placeholder="Введите логин"
+            class="login__input"
+          />
 
-        <label for="password" class="login__label">Введите Пароль</label>
-        <input
-          v-model="password"
-          type="password"
-          placeholder="Пароль"
-          class="password-input"
-        />
+          <label for="password" class="login__label">Пароль</label>
+          <input
+            v-model="loginData.password"
+            placeholder="Введите Пароль"
+            class="password-input"
+          />
+        </div>
       </div>
-    </div>
+      <div class="form__action">
+        <button type="submit" class="form__action-button">Войти</button>
+      </div>
+    </form>
   </div>
 </template>
 
@@ -29,6 +37,27 @@ export default {
 
 <script setup lang="ts">
 import TheLogo from "../../components/TheLogo.vue";
+import { reactive } from "vue";
+import { useStore } from "vuex";
+
+const store = useStore();
+
+const loginData = reactive({
+  username: "",
+  password: "",
+});
+
+async function userAuth() {
+  try {
+    await store.dispatch("fetchAuth", {
+      login: loginData.username,
+      password: loginData.password,
+    });
+    console.log("Авторизация успешная");
+  } catch (error) {
+    console.error("Ошибка авторизации:", error);
+  }
+}
 </script>
 
 <style scoped lang="scss">
@@ -58,6 +87,7 @@ import TheLogo from "../../components/TheLogo.vue";
       color: white; // Цвет текста лейбла
       font-size: 16px; // Размер шрифта лейбла
       font-weight: 500; // Начертание шрифта
+      padding-left: 10px;
     }
 
     .login__input,
@@ -71,10 +101,10 @@ import TheLogo from "../../components/TheLogo.vue";
       outline: none;
       background: linear-gradient(
         45deg,
-        rgb(255 255 255 / 45%),
+        rgba(255, 255, 255, 0.45),
         rgba(255, 255, 255, 0.2)
       );
-      color: black;
+      color: #ffffff;
       transition: all 0.3s ease;
     }
 
@@ -98,5 +128,18 @@ import TheLogo from "../../components/TheLogo.vue";
       box-shadow: 0 0 8px rgba(92, 107, 192, 0.4);
     }
   }
+}
+
+.form__action-button {
+  width: 100%;
+  max-width: 500px;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: 2px solid #3a55ac;
+  border-radius: 50px;
+  outline: none;
+  background: linear-gradient(45deg, rgb(255 255 255), rgb(242 242 242));
+  color: black;
+  transition: all 0.3s ease;
 }
 </style>

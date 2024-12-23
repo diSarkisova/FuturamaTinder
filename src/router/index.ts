@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import type { RouteComponent } from 'vue-router';
 import DefaultLayout from '../layouts/default/default.vue'
 import LoginLayout from '../layouts/login/login.vue'
+import RegisterLayout from "../layouts/register/register.vue";
 
 const routes = [
   {
@@ -41,6 +42,14 @@ const routes = [
     name: 'Login',
     meta: {
       title: 'Страница входа'
+    }
+  },
+  {
+    path: '/register',
+    component: RegisterLayout,
+    name: 'Register',
+    meta: {
+      title: 'Страница регистрации'
     }
   },
 ]
