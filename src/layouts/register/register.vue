@@ -69,6 +69,9 @@ export default {
 import { reactive } from "vue";
 import { useStore } from "vuex";
 import TheLogo from "../../components/TheLogo.vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 // Создаем реактивный объект для хранения данных
 const store = useStore();
@@ -97,8 +100,8 @@ async function userRegister() {
   try {
     // Отправляем данные на сервер через Vuex
     await store.dispatch("register", registerData);
+    await router.push({ path: "/" });
     console.log("User registered successfully");
-    // Можно добавить редирект или очистку формы по желанию
   } catch (error) {
     console.error("Error registering user:", error);
   }

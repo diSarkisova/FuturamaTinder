@@ -2,12 +2,19 @@
   <div class="profile">
     <TheLogo />
     <img>Фото Пользователя</img>
-    <h3>Имя пользователя</h3>
+    <h3>{{user}} </h3>
   </div>
 </template>
 
 <script setup lang="ts">
+import { computed, onMounted, ref } from "vue";
 import  TheLogo from '../components/TheLogo.vue'
+import { useStore } from "vuex";
+
+const store = useStore();
+
+const user= computed(()=> store.state.name)
+
 </script>
 
 <script lang="ts">

@@ -2,33 +2,38 @@ import { createStore } from "vuex";
 
 export default {
   state: () => ({
-    name: "",
-    surname: "",
-    email: "",
-    username: "",
-    password: "",
-    token: "", // Сохранение токена при успешной регистрации (если нужно)
+    name: localStorage.getItem('name') || "",
+    surname: localStorage.getItem('surname') || "",
+    email: localStorage.getItem('email') || "",
+    username: localStorage.getItem('username') || "",
+    password: localStorage.getItem('password') || "",
+    // token: "", // Сохранение токена при успешной регистрации (если нужно)
   }),
 
   mutations: {
     setName(state, name) {
       state.name = name;
+      localStorage.setItem('name', name);
     },
     setSurname(state, surname) {
       state.surname = surname;
+      localStorage.setItem('surname', surname);
     },
     setEmail(state, email) {
       state.email = email;
+      localStorage.setItem('email', email);
     },
     setUsername(state, username) {
       state.username = username;
+      localStorage.setItem('username', username);
     },
     setPassword(state, password) {
       state.password = password;
+      localStorage.setItem('password', password);
     },
-    setToken(state, token) {
-      state.token = token;
-    },
+    // setToken(state, token) {
+    //   state.token = token;
+    // },
   },
 
   actions: {
@@ -49,53 +54,27 @@ export default {
           }),
         });
 
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
+        // if (!response.ok) {
+        //   throw new Error(`HTTP error! Status: ${response.status}`);
+        // }
 
         const data = await response.json();
+        
+        commit("setName", name);
+        commit("setSurname", surname);
+        commit("setEmail", email);
+        commit("setUsername", username);
+        commit("setPassword", password);
 
-        if (data.token) {
-          commit("setToken", data.token); // Сохраняем токен, если он есть
-          console.log("User registered successfully:", data);
-        } else {
-          throw new Error("Token is missing in response");
-        }
+        // if (data.token) {
+        //   commit("setToken", data.token); // Сохраняем токен, если он есть
+        //   console.log("User registered successfully:", data);
+        // } else {
+        //   throw new Error("Token is missing in response");
+        // }
       } catch (error) {
         console.error("Ошибка регистрации:", error);
-        throw error;
-      }
-    },
-
-    // Действие для аутентификации (если необходимо)
-    async fetchAuth({ commit }, { username, password }) {
-      try {
-        const response = await fetch("https://futuramaapi.com/api/tokens/users/auth", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            username,
-            password,
-          }),
-        });
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const data = await response.json();
-
-        if (data.token) {
-          commit("setToken", data.token); // Сохраняем токен при успешной авторизации
-          console.log("User authenticated successfully:", data);
-        } else {
-          throw new Error("Token is missing in response");
-        }
-      } catch (error) {
-        console.error("Ошибка аутентификации:", error);
-        throw error;
+        // throw error;
       }
     },
   },

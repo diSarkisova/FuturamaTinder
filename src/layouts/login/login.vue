@@ -39,8 +39,10 @@ export default {
 import TheLogo from "../../components/TheLogo.vue";
 import { reactive } from "vue";
 import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 
 const store = useStore();
+const router = useRouter();
 
 const loginData = reactive({
   username: "",
@@ -54,6 +56,7 @@ async function userAuth() {
       password: loginData.password,
     });
     console.log("Авторизация успешная");
+    await router.push({ path: "/" });
   } catch (error) {
     console.error("Ошибка авторизации:", error);
   }
