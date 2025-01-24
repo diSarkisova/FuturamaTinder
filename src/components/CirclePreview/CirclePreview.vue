@@ -1,21 +1,17 @@
 <template>
   <div class="circle-preview">
-    <img class="circle-preview__img" :src="icon" alt="user image" />
+    <img class="circle-preview__img" :src="props.icon" alt="user image" />
   </div>
 </template>
 
-<script setup>
-defineProps({
-  icon: {
-    src: String,
-    required: true,
-    default: "../assets/icons/user.png",
-  },
-});
+<script setup lang="ts">
+import type { IProps } from "./types";
+
+const props = defineProps<IProps>();
 </script>
 
 <style scoped lang="scss">
-@import "../assets/styles/variables/variables.scss";
+// @import "../assets/styles/variables/variables.scss";
 
 .circle-preview {
   position: relative;

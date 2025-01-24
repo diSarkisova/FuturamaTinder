@@ -4,7 +4,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 const emit = defineEmits(["remove"]); // определяем событие remove
 
 const emitRemove = () => {

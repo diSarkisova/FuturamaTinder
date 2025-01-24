@@ -4,7 +4,6 @@ export default {
   state: () => ({
     login: '',
     password: '',
-    // token: '',
   }),
   mutations: {
     setLogin(state, login) {
@@ -13,9 +12,6 @@ export default {
     setPassword(state, password) {
       state.password = password;
     },
-    // setToken(state, token) {
-    //   state.token = token;
-    // },
   },
   actions: {
     async fetchAuth({ commit }, { login, password }) {
@@ -27,18 +23,7 @@ export default {
           },
           body: JSON.stringify({ username: login, password }),
         });
-
-        // if (!response.ok) {
-        //   throw new Error(`HTTP error! Status: ${response.status}`);
-        // }
-
         const data = await response.json();
-
-        // if (data.token) {
-        //   commit('setToken', data.token);
-        // } else {
-        //   throw new Error('Token is missing in response');
-        // }
       } catch (error) {
         console.error('Ошибка аутентификации:', error);
       }

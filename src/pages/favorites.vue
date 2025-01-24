@@ -1,6 +1,6 @@
 <template>
   <div class="favorites">
-    <h2 class="favorites__name">Favorite partners</h2>
+    <h2 class="favorites__name">Liked partners</h2>
     <input
       v-model="filterTable"
       placeholder="Search favorites"
@@ -86,33 +86,33 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden; /* Чтобы избежать лишнего пространства */
+    overflow: hidden;
   }
 
   &__img-container {
     position: relative;
     width: 100%;
-    height: 250px; /* Высота для изображений */
-    overflow: hidden; /* Обрезать изображение, если оно выходит за пределы контейнера */
+    height: 250px;
+    overflow: hidden;
   }
 
   &__image {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Чтобы изображения не искажались, но заполнили весь контейнер */
+    object-fit: cover;
     border-radius: 8px;
   }
 
   /* Контейнер для текста (имя) */
   &__text-overlay {
     position: absolute;
-    bottom: 10px;
+    bottom: 0px;
     left: 0;
     width: 100%;
     padding: 5px;
-    background-color: rgba(0, 0, 0, 0.5); /* полупрозрачный фон для текста */
+    background-color: rgba(0, 0, 0, 0.5);
     text-align: center;
-    border-radius: 0 0 8px 8px; /* Закругленные углы внизу */
+    border-radius: 0 0 8px 8px;
   }
 
   &__name {
@@ -123,6 +123,7 @@ export default {
     color: white;
     font-size: 16px;
     font-weight: bold;
+    font-weight: 300;
   }
 
   &__input {
@@ -140,6 +141,7 @@ export default {
     );
     color: black;
     transition: all 0.3s ease;
+    font-weight: 300;
   }
 
   &__input::placeholder {
@@ -147,17 +149,17 @@ export default {
   }
 
   &__input:focus {
-    border-color: #5c6bc0; /* Цвет при фокусе */
+    border-color: #5c6bc0;
     background: linear-gradient(
       45deg,
       rgba(92, 107, 192, 0.7),
       rgba(255, 255, 255, 0.4)
-    ); /* Интенсивный градиент при фокусе */
-    box-shadow: 0 0 8px rgba(92, 107, 192, 0.4); /* Легкая тень */
+    );
+    box-shadow: 0 0 8px rgba(92, 107, 192, 0.4);
   }
 
   &__input:focus::placeholder {
-    color: rgba(92, 107, 192, 1); /* Цвет плейсхолдера при фокусе */
+    color: rgba(92, 107, 192, 1);
   }
 }
 </style>

@@ -1,8 +1,8 @@
 <template>
   <div class="login__layout">
     <TheLogo />
-    <h2>FuturamaMatch</h2>
-    <h1>Sign In</h1>
+    <h2 class="login__name">FuturamaMatch</h2>
+    <h1 class="login__sign">Sign In</h1>
 
     <form @submit.prevent="userAuth">
       <div class="login__layout-container">
@@ -50,6 +50,11 @@ const loginData = reactive({
 });
 
 async function userAuth() {
+  // проверка на пустые поля
+  if (!loginData.username || !loginData.password) {
+    console.log("не введены логин и пароль");
+    return;
+  }
   try {
     await store.dispatch("fetchAuth", {
       login: loginData.username,
@@ -72,6 +77,7 @@ async function userAuth() {
   height: 100vh;
   background: linear-gradient(to bottom, #2162bc, #461280);
   padding: 40px;
+  color: white;
 
   &__layout-container {
     display: flex;
@@ -131,6 +137,14 @@ async function userAuth() {
       box-shadow: 0 0 8px rgba(92, 107, 192, 0.4);
     }
   }
+}
+
+.login__name {
+  font-weight: 600;
+}
+
+.login__sign {
+  font-weight: 400;
 }
 
 .form__action-button {

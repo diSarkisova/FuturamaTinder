@@ -52,7 +52,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted } from "vue";
+import { computed, onBeforeMount, onMounted, ref } from "vue";
 import { useStore } from "vuex";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/swiper-bundle.css";
@@ -145,11 +145,13 @@ export default {
   &__name {
     font-size: 24px;
     margin-bottom: 10px;
+    font-weight: 400;
   }
 
   &__description {
     font-size: 16px;
     margin-bottom: 20px;
+    font-weight: 300;
   }
 
   &__buttons-container {

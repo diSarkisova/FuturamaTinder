@@ -9,12 +9,12 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed, ref } from "vue";
 
 const filterTable = ref("");
 
-const filterTable = computed({
-  get() {},
-});
+// const filterTable = computed({
+//   get() {},
+// });
 </script>

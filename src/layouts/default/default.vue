@@ -2,19 +2,20 @@
   <div class="default-layout">
     <header class="default-layout__header">
       <router-link class="default-layout__wrapper" to="/">
-        <TheLogo />FuturamaMatch
+        <TheLogo class="default-layout-logo" />FuturamaMatch
       </router-link>
 
       <div class="default-layout__container">
         <router-link to="/profile">
-          <circle-preview></circle-preview
-        ></router-link>
+          <CirclePreview :icon="randomCharacterImage" />
+        </router-link>
       </div>
     </header>
 
     <main class="default-layout__main">
       <RouterView />
     </main>
+
     <footer class="default-layout__footer">
       <router-link class="mdi mdi-fire" to="/"></router-link>
       <router-link to="/favorites" class="mdi mdi-heart"></router-link>
@@ -27,7 +28,22 @@
 
 <script setup lang="ts">
 import TheLogo from "../../components/TheLogo.vue";
-import circlePreview from "../../components/circlePreview.vue";
+import CirclePreview from "../../components/CirclePreview/CirclePreview.vue";
+import { useStore } from "vuex";
+import { computed, onMounted } from "vue";
+
+const store = useStore();
+
+const characters = computed(() => store.getters.getItems);
+
+// Выбираем случайную картинку
+const randomCharacterImage = computed(() => {
+  if (characters.value.length > 0) {
+    const randomIndex = Math.floor(Math.random() * characters.value.length);
+    return characters.value[randomIndex]?.image; // Предполагаем, что у каждого персонажа есть поле `image`
+  }
+  return ""; // Если список пуст, возвращаем пустую строку
+});
 </script>
 
 <script lang="ts">
@@ -37,8 +53,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../assets/styles/variables/variables.scss";
-
 .default-layout {
   display: flex;
   flex-direction: column;
@@ -51,6 +65,10 @@ export default {
     display: flex;
     justify-content: space-between;
     padding: 20px 20px 0 20px;
+  }
+
+  &__logo {
+    font-weight: 600;
   }
 
   &__wrapper {
