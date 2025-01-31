@@ -2,7 +2,7 @@
   <div class="register__layout">
     <TheLogo />
     <h2>FuturamaMatch</h2>
-    <h1>Sign Up-Register</h1>
+    <h1>Sign Up</h1>
 
     <form @submit.prevent="userRegister">
       <div class="register__layout-container">
@@ -50,9 +50,7 @@
           />
         </div>
         <div class="form__action">
-          <button type="submit" class="form__action-button">
-            Зарегистрироваться
-          </button>
+          <button type="submit" class="form__action-button">Sign Up</button>
         </div>
       </div>
     </form>
@@ -68,7 +66,7 @@ export default {
 <script setup lang="ts">
 import { reactive } from "vue";
 import { useStore } from "vuex";
-import TheLogo from "../../components/TheLogo.vue";
+import TheLogo from "../../components/TheLogo/TheLogo.vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
@@ -131,10 +129,10 @@ async function userRegister() {
     padding-top: 30px;
 
     .register__label {
-      margin-bottom: 8px; // Отступ между label и инпутом
-      color: white; // Цвет текста лейбла
-      font-size: 16px; // Размер шрифта лейбла
-      font-weight: 500; // Начертание шрифта
+      margin-bottom: 8px;
+      color: white;
+      font-size: 16px;
+      font-weight: 500;
       padding-left: 10px;
     }
 
@@ -188,12 +186,3 @@ async function userRegister() {
   transition: all 0.3s ease;
 }
 </style>
-<!-- // обязательные поля
-{
-  
-    "name": "string",
-    "surname": "string",
-    "email": "user@example.com",
-    "username": "string",
-    "password": "55555555", 
-  } -->

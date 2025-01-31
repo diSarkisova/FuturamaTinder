@@ -1,7 +1,7 @@
 <template>
   <a class="logo__link">
     <img
-      src="../assets/icons/logo.svg"
+      src="../../assets/icons/logo.svg"
       alt="Futurama Tinder"
       class="logo__picture"
     />

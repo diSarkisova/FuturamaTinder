@@ -1,6 +1,9 @@
 <template>
   <div class="overview">
+    <div v-if="isLoading" class="loading-spinner">Loading...</div>
     <swiper
+      v-else
+      ref="swiperRef"
       :loop="true"
       :effect="'cards'"
       :grabCursor="true"
@@ -9,7 +12,6 @@
       :spaceBetween="50"
       :slidesPerView="1"
       :centeredSlides="true"
-      :cardsEffect="{ rotate: 10, slideShadows: true }"
       :speed="500"
       :touchRatio="1"
       :scrollbar="{ hide: false }"
@@ -24,6 +26,7 @@
             :src="character.image"
             :alt="'Image ' + index"
             class="overview__image"
+            loading="lazy"
           />
           <div class="overview__text-container">
             <h2 class="overview__name">{{ character.name }}</h2>
@@ -33,7 +36,7 @@
             <div class="overview__buttons-container">
               <button
                 class="overview__button overview__button--close"
-                @click="goToNextSlide"
+                @click="nextSlide"
               >
                 ✖
               </button>
@@ -52,28 +55,79 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeMount, onMounted, ref } from "vue";
+import { computed, ref, onMounted, watch } from "vue";
 import { useStore } from "vuex";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/swiper-bundle.css";
 import { EffectCards, Scrollbar } from "swiper/modules";
 
+// Модули Swiper
 const modules = [EffectCards, Scrollbar];
 
-// Получаем доступ к Vuex store
+// Хранилище Vuex
 const store = useStore();
 
-// Используем геттер для получения списка персонажей
-const characters = computed(() => store.getters.getItems); // Получаем все элементы
+// Ссылка на Swiper
+const swiperRef = ref<typeof Swiper | null>(null);
 
-// Функция для добавления персонажа в избранное
-function onclickLike(character) {
-  store.dispatch("addToFavorites", character); // Добавляем персонажа в избранное
+// Состояния
+const isLoading = ref(true);
+const error = ref<string | null>(null);
+
+// Получаем персонажей из хранилища
+const characters = computed(() => store.getters.getItems);
+
+// Добавление в избранное
+async function onclickLike(character: any) {
+  try {
+    await store.dispatch("addToFavorites", character);
+    nextSlide();
+  } catch (err) {
+    console.error("Failed to add to favorites:", err);
+    error.value = "Failed to add to favorites. Please try again.";
+  }
 }
 
-onMounted(() => {
-  store.dispatch("fetchItems"); // Загружаем персонажей из API
-  store.dispatch("loadFavoritesFromLocalStorage"); // Загружаем избранных из localStorage
+// Переход к следующему слайду
+function nextSlide() {
+  if (swiperRef.value?.swiper && characters.value.length > 0) {
+    swiperRef.value.swiper.slideNext();
+  } else {
+    console.error("Swiper is not initialized yet or no characters available.");
+    error.value = "No characters available or Swiper failed to initialize.";
+  }
+}
+
+// Обновление Swiper при изменении данных
+watch(characters, (newVal) => {
+  if (newVal.length > 0 && swiperRef.value?.swiper) {
+    swiperRef.value.swiper.update();
+  } else {
+    // console.error("No characters available.");
+    error.value = "No characters available.";
+  }
+});
+
+// Загрузка данных при монтировании
+onMounted(async () => {
+  try {
+    await store.dispatch("fetchItems");
+    await store.dispatch("loadFavoritesFromLocalStorage");
+  } catch (err) {
+    console.error("Failed to load data:", err);
+    error.value = "Failed to load data. Please try again later.";
+  } finally {
+    isLoading.value = false;
+  }
+
+  setTimeout(() => {
+    if (swiperRef.value?.swiper) {
+      console.log("Swiper initialized successfully.");
+      console.log("Swiper instance:", swiperRef.value.swiper);
+    } else {
+      error.value = "Swiper failed to initialize. Please refresh the page.";
+    }
+  }, 1000);
 });
 </script>
 
@@ -84,6 +138,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.overview__swiper {
+  width: 100%;
+  height: 460px;
+  position: relative;
+
+  // Добавьте это, чтобы убедиться, что Swiper корректно отображает слайды
+  .swiper-slide {
+    width: 100%;
+    height: 100%;
+  }
+}
+
 .overview {
   width: 100%;
   max-width: 800px;
@@ -174,10 +240,10 @@ export default {
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease; /* Плавный переход для всех свойств */
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
 
     &:active {
-      transform: scale(1.1); /* Увеличение кнопки при клике */
+      transform: scale(1.1);
       color: red;
     }
 
@@ -190,8 +256,49 @@ export default {
     }
 
     &:hover {
-      background-color: rgba(255, 255, 255, 0.2); /* Легкое затемнение фона */
+      background-color: rgba(255, 255, 255, 0.2);
     }
+  }
+}
+
+.overview__button {
+  &:hover {
+    transform: scale(1.05);
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+.loading-spinner,
+.error-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 460px;
+  color: white;
+  font-size: 18px;
+}
+
+.loading-spinner {
+  &::after {
+    content: "";
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin 1s linear infinite;
+    margin-left: 10px;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
   }
 }
 </style>

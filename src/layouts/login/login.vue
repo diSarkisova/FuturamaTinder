@@ -36,7 +36,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import TheLogo from "../../components/TheLogo.vue";
+import TheLogo from "../../components/TheLogo/TheLogo.vue";
 import { reactive } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
@@ -92,10 +92,10 @@ async function userAuth() {
     padding-top: 50px;
 
     .login__label {
-      margin-bottom: 8px; // Отступ между label и инпутом
-      color: white; // Цвет текста лейбла
-      font-size: 16px; // Размер шрифта лейбла
-      font-weight: 500; // Начертание шрифта
+      margin-bottom: 8px;
+      color: white;
+      font-size: 16px;
+      font-weight: 500;
       padding-left: 10px;
     }
 

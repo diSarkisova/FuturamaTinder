@@ -3,18 +3,14 @@
     <textarea
       class="ui-textarea"
       v-model="filterTable"
-      placeholder="Введите запрос "
+      placeholder="Введите запрос"
     >
     </textarea>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { ref } from "vue";
 
 const filterTable = ref("");
-
-// const filterTable = computed({
-//   get() {},
-// });
 </script>

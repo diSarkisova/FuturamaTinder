@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import TheLogo from "../../components/TheLogo.vue";
+import TheLogo from "../../components/TheLogo/TheLogo.vue";
 import CirclePreview from "../../components/CirclePreview/CirclePreview.vue";
 import { useStore } from "vuex";
 import { computed, onMounted } from "vue";
@@ -36,13 +36,12 @@ const store = useStore();
 
 const characters = computed(() => store.getters.getItems);
 
-// Выбираем случайную картинку
 const randomCharacterImage = computed(() => {
   if (characters.value.length > 0) {
     const randomIndex = Math.floor(Math.random() * characters.value.length);
-    return characters.value[randomIndex]?.image; // Предполагаем, что у каждого персонажа есть поле `image`
+    return characters.value[randomIndex]?.image;
   }
-  return ""; // Если список пуст, возвращаем пустую строку
+  return "";
 });
 </script>
 

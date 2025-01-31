@@ -19,7 +19,7 @@
             :alt="'Favorite image ' + index"
             class="favorites__image"
           />
-          <TheButton @remove="removeFavorite(fav.id)" />
+          <TheButton @remove="openModal(fav.id)" />
           <div class="favorites__text-overlay">
             <p class="favorites__description">{{ fav.name }}</p>
           </div>
@@ -27,6 +27,26 @@
       </div>
     </div>
     <p v-else>No favorites found.</p>
+
+    <ui-dialog-modal v-if="showModal" @close="cancelRemove">
+      <template #default>
+        <p>Are you sure you want to remove this favorite?</p>
+        <div class="modal-buttons">
+          <button
+            class="modal-button modal-button--confirm"
+            @click="confirmRemove"
+          >
+            Yes
+          </button>
+          <button
+            class="modal-button modal-button--cancel"
+            @click="cancelRemove"
+          >
+            No
+          </button>
+        </div>
+      </template>
+    </ui-dialog-modal>
   </div>
 </template>
 
@@ -34,10 +54,14 @@
 import { computed, onMounted, ref } from "vue";
 import { useStore } from "vuex";
 import TheButton from "../ui/TheButton.vue";
+import UiDialogModal from "../ui/TheDialogModal/TheDialogModal.vue";
 
 const store = useStore();
-
 const filterTable = ref("");
+
+// Состояние для показа модалки
+const showModal = ref(false);
+const favoriteIdToRemove = ref<string | null>(null); // Храним id того элемента, который хотим удалить
 
 // Фильтрация избранных по имени
 const filteredFavorites = computed(() => {
@@ -54,9 +78,25 @@ onMounted(() => {
   store.dispatch("loadFavoritesFromLocalStorage");
 });
 
-// Функция для удаления избранного
-const removeFavorite = (favoriteId) => {
-  store.dispatch("removeFromFavorites", favoriteId); // Удалить из Vuex store
+// Открытие модалки и передача ID элемента
+const openModal = (id: string) => {
+  favoriteIdToRemove.value = id; // Запоминаем ID для удаления
+  showModal.value = true; // Открываем модалку
+};
+
+// Подтверждение удаления
+const confirmRemove = () => {
+  if (favoriteIdToRemove.value) {
+    store.dispatch("removeFromFavorites", favoriteIdToRemove.value); // Удаляем из Vuex store
+  }
+  showModal.value = false; // Закрываем модалку
+  favoriteIdToRemove.value = null; // Сбрасываем значение
+};
+
+// Отмена удаления
+const cancelRemove = () => {
+  showModal.value = false; // Закрываем модалку
+  favoriteIdToRemove.value = null; // Сбрасываем значение
 };
 </script>
 
@@ -103,7 +143,6 @@ export default {
     border-radius: 8px;
   }
 
-  /* Контейнер для текста (имя) */
   &__text-overlay {
     position: absolute;
     bottom: 0px;
@@ -160,6 +199,31 @@ export default {
 
   &__input:focus::placeholder {
     color: rgba(92, 107, 192, 1);
+  }
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.modal-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+
+  &--confirm {
+    background-color: #d9534f;
+    color: #fff;
+  }
+
+  &--cancel {
+    background-color: #5bc0de;
+    color: #fff;
   }
 }
 </style>

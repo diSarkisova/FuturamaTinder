@@ -5,10 +5,9 @@
 </template>
 
 <script setup lang="ts">
-const emit = defineEmits(["remove"]); // определяем событие remove
+const emit = defineEmits(["remove"]);
 
 const emitRemove = () => {
-  // Генерируем событие удаления
   emit("remove");
 };
 </script>
@@ -20,10 +19,9 @@ const emitRemove = () => {
   right: 10px;
   width: 24px;
   height: 24px;
-  background-color: transparent; /* Прозрачный фон */
+  background-color: transparent;
   cursor: pointer;
-  transition: background-color 0.3s ease; /* Плавный переход для фона (при необходимости) */
-
+  transition: background-color 0.3s ease;
   &:before,
   &:after {
     content: "";
@@ -34,7 +32,7 @@ const emitRemove = () => {
     height: 3px;
     background-color: white;
     transform: translate(-50%, -50%);
-    transition: background-color 0.3s ease; /* Плавный переход для линий */
+    transition: background-color 0.3s ease;
   }
 
   &:before {
@@ -45,11 +43,10 @@ const emitRemove = () => {
     transform: translate(-50%, -50%) rotate(-45deg);
   }
 
-  /* Эффект при наведении */
   &:hover {
     &:before,
     &:after {
-      background-color: red; /* Линии крестика становятся черными */
+      background-color: red;
     }
   }
 }

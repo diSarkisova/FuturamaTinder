@@ -11,13 +11,10 @@ const props = defineProps<IProps>();
 </script>
 
 <style scoped lang="scss">
-// @import "../assets/styles/variables/variables.scss";
-
 .circle-preview {
   position: relative;
   width: 60px;
   height: 60px;
-  border: 1px solid black;
   overflow: hidden;
   border-radius: 50%;
   display: flex;
