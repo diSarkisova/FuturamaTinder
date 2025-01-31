@@ -1,181 +1,89 @@
 <template>
   <div class="overview">
     <div v-if="isLoading" class="loading-spinner">Loading...</div>
-    <swiper
-      v-else
-      ref="swiperRef"
-      :loop="true"
-      :effect="'cards'"
-      :grabCursor="true"
-      :modules="modules"
-      class="overview__swiper"
-      :spaceBetween="50"
-      :slidesPerView="1"
-      :centeredSlides="true"
-      :speed="500"
-      :touchRatio="1"
-      :scrollbar="{ hide: false }"
-    >
-      <swiper-slide
-        v-for="(character, index) in characters"
-        :key="index"
-        class="overview__swiper-slide"
-      >
+    <CardSwiper v-else :items="characters" ref="cardSwiper">
+      <template #default="{ item, index }">
         <div class="overview__image-container">
           <img
-            :src="character.image"
+            :src="item.image"
             :alt="'Image ' + index"
             class="overview__image"
             loading="lazy"
           />
           <div class="overview__text-container">
-            <h2 class="overview__name">{{ character.name }}</h2>
+            <h2 class="overview__name">{{ item.name }}</h2>
             <p class="overview__description">
-              species: {{ character.species || "Описание нашего персонажа" }}
+              species: {{ item.species || "Описание нашего персонажа" }}
             </p>
             <div class="overview__buttons-container">
               <button
                 class="overview__button overview__button--close"
-                @click="nextSlide"
+                @click="onclickDislike"
               >
                 ✖
               </button>
               <button
                 class="overview__button overview__button--like"
-                @click="onclickLike(character)"
+                @click="onclickLike(item)"
               >
                 ❤
               </button>
             </div>
           </div>
         </div>
-      </swiper-slide>
-    </swiper>
+      </template>
+    </CardSwiper>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref, onMounted, watch } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { useStore } from "vuex";
-import { Swiper, SwiperSlide } from "swiper/vue";
-import "swiper/swiper-bundle.css";
-import { EffectCards, Scrollbar } from "swiper/modules";
-
-// Модули Swiper
-const modules = [EffectCards, Scrollbar];
+import CardSwiper from "../ui/Swiper/Swiper.vue"; // Импортируем компонент
 
 // Хранилище Vuex
 const store = useStore();
 
-// Ссылка на Swiper
-const swiperRef = ref<typeof Swiper | null>(null);
-
 // Состояния
 const isLoading = ref(true);
-const error = ref<string | null>(null);
-
-// Получаем персонажей из хранилища
 const characters = computed(() => store.getters.getItems);
+const cardSwiper = ref(null); // Ссылка на компонент CardSwiper
 
-// Добавление в избранное
-async function onclickLike(character: any) {
+// Лайк
+const onclickLike = async (character) => {
   try {
     await store.dispatch("addToFavorites", character);
-    nextSlide();
-  } catch (err) {
-    console.error("Failed to add to favorites:", err);
-    error.value = "Failed to add to favorites. Please try again.";
+  } catch (e) {
+    console.error("Failed to add to favorites:", e);
   }
-}
+  cardSwiper.value?.swipeNext(); // Используем метод из CardSwiper
+};
 
-// Переход к следующему слайду
-function nextSlide() {
-  if (swiperRef.value?.swiper && characters.value.length > 0) {
-    swiperRef.value.swiper.slideNext();
-  } else {
-    console.error("Swiper is not initialized yet or no characters available.");
-    error.value = "No characters available or Swiper failed to initialize.";
-  }
-}
+// Дизлайк
+const onclickDislike = () => {
+  cardSwiper.value?.swipeNext(); // Используем метод из CardSwiper
+};
 
-// Обновление Swiper при изменении данных
-watch(characters, (newVal) => {
-  if (newVal.length > 0 && swiperRef.value?.swiper) {
-    swiperRef.value.swiper.update();
-  } else {
-    // console.error("No characters available.");
-    error.value = "No characters available.";
-  }
-});
-
-// Загрузка данных при монтировании
+// Загрузка данных
 onMounted(async () => {
   try {
     await store.dispatch("fetchItems");
     await store.dispatch("loadFavoritesFromLocalStorage");
-  } catch (err) {
-    console.error("Failed to load data:", err);
-    error.value = "Failed to load data. Please try again later.";
+  } catch (e) {
+    console.log("Failed to load data:", e);
   } finally {
     isLoading.value = false;
   }
-
-  setTimeout(() => {
-    if (swiperRef.value?.swiper) {
-      console.log("Swiper initialized successfully.");
-      console.log("Swiper instance:", swiperRef.value.swiper);
-    } else {
-      error.value = "Swiper failed to initialize. Please refresh the page.";
-    }
-  }, 1000);
 });
 </script>
 
-<script lang="ts">
-export default {
-  name: "Overview",
-};
-</script>
-
-<style lang="scss" scoped>
-.overview__swiper {
-  width: 100%;
-  height: 460px;
-  position: relative;
-
-  // Добавьте это, чтобы убедиться, что Swiper корректно отображает слайды
-  .swiper-slide {
-    width: 100%;
-    height: 100%;
-  }
-}
-
+<style scoped lang="scss">
 .overview {
   width: 100%;
   max-width: 800px;
   margin: 0 auto;
   overflow: hidden;
   position: relative;
-
-  &__swiper {
-    width: 100%;
-    height: 460px;
-    position: relative;
-  }
-
-  &__swiper-slide {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    width: 100%;
-    height: 100%;
-    border-radius: 18px;
-    font-size: 22px;
-    font-weight: bold;
-    color: #fff;
-    transition: transform 0.5s ease, opacity 0.5s ease;
-  }
 
   &__image-container {
     position: relative;
@@ -229,8 +137,8 @@ export default {
   }
 
   &__button {
-    width: 40px;
-    height: 40px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     border: 2px solid #fff;
     background-color: transparent;
@@ -261,33 +169,21 @@ export default {
   }
 }
 
-.overview__button {
-  &:hover {
-    transform: scale(1.05);
-    background-color: rgba(255, 255, 255, 0.3);
-  }
-
-  &:active {
-    transform: scale(0.95);
-  }
-}
-
-.loading-spinner,
-.error-message {
+.loading-spinner {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 460px;
   color: white;
   font-size: 18px;
-}
+  flex-direction: column;
+  gap: 15px;
 
-.loading-spinner {
   &::after {
     content: "";
     display: inline-block;
-    width: 24px;
-    height: 24px;
+    width: 35px;
+    height: 35px;
     border: 3px solid rgba(255, 255, 255, 0.3);
     border-radius: 50%;
     border-top-color: #fff;
