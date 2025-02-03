@@ -36,13 +36,13 @@ export default {
 }
 
 .modal-content {
-  background: #fff;
   padding: 20px;
   border-radius: 8px;
   width: 90%;
   max-width: 400px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   position: relative;
+  background-color: rgb(255 255 255 / 96%);
 }
 
 .modal-close {

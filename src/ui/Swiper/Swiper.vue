@@ -38,7 +38,7 @@ const onSwiper = (swiper) => {
 
 // Пробрасываем метод для переключения слайдов
 const swipeNext = () => {
-  if (swiperRef.value) {
+  if (swiperRef.value?.swiper) {
     swiperRef.value.slideNext();
   }
 };

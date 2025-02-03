@@ -2,7 +2,8 @@
   <div class="default-layout">
     <header class="default-layout__header">
       <router-link class="default-layout__wrapper" to="/">
-        <TheLogo class="default-layout-logo" />FuturamaMatch
+        <TheLogo class="default-layout-logo" />
+        <h1 class="default-layout-title">FuturamaMatch</h1>
       </router-link>
 
       <div class="default-layout__container">
@@ -52,12 +53,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.default-layout-title {
+  font-size: 15px;
+  font-weight: 400;
+
+  @media only screen and (max-width: 750px) {
+    display: none;
+  }
+}
 .default-layout {
   display: flex;
   flex-direction: column;
   width: 100%;
   height: 100vh;
   background-image: url("../../assets/images/background.png");
+  background-size: cover;
   z-index: 1;
 
   &__header {
@@ -66,8 +76,9 @@ export default {
     padding: 20px 20px 0 20px;
   }
 
-  &__logo {
-    font-weight: 600;
+  &__title {
+    font-size: 15px;
+    font-weight: 400;
   }
 
   &__wrapper {
@@ -108,10 +119,14 @@ export default {
 
   &__footer .mdi {
     font-size: 30px;
+    transition: color 0.3s ease;
 
     &:hover {
       color: red;
-      transition: color 0.3s ease;
+    }
+
+    &.router-link-exact-active {
+      color: red;
     }
   }
 }

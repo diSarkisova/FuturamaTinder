@@ -1,6 +1,9 @@
 <template>
   <div class="overview">
     <div v-if="isLoading" class="loading-spinner">Loading...</div>
+    <div v-else-if="characters.length === 0" class="no-items">
+      No more items to show.
+    </div>
     <CardSwiper v-else :items="characters" ref="cardSwiper">
       <template #default="{ item, index }">
         <div class="overview__image-container">
@@ -39,42 +42,52 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from "vue";
 import { useStore } from "vuex";
-import CardSwiper from "../ui/Swiper/Swiper.vue"; // Импортируем компонент
+import CardSwiper from "../ui/Swiper/Swiper.vue";
 
-// Хранилище Vuex
 const store = useStore();
 
-// Состояния
 const isLoading = ref(true);
-const characters = computed(() => store.getters.getItems);
-const cardSwiper = ref(null); // Ссылка на компонент CardSwiper
+const characters = ref([]);
+const cardSwiper = ref(null);
 
-// Лайк
-const onclickLike = async (character) => {
-  try {
-    await store.dispatch("addToFavorites", character);
-  } catch (e) {
-    console.error("Failed to add to favorites:", e);
-  }
-  cardSwiper.value?.swipeNext(); // Используем метод из CardSwiper
-};
-
-// Дизлайк
-const onclickDislike = () => {
-  cardSwiper.value?.swipeNext(); // Используем метод из CardSwiper
-};
-
-// Загрузка данных
 onMounted(async () => {
   try {
     await store.dispatch("fetchItems");
     await store.dispatch("loadFavoritesFromLocalStorage");
+    characters.value = [...store.getters.getItems];
   } catch (e) {
     console.log("Failed to load data:", e);
   } finally {
     isLoading.value = false;
   }
 });
+
+const onclickLike = async (character, index) => {
+  try {
+    await store.dispatch("addToFavorites", character);
+  } catch (e) {
+    console.error("Failed to add to favorites:", e);
+  }
+  removeCharacter(index);
+};
+
+const onclickDislike = (index) => {
+  removeCharacter(index);
+};
+
+const removeCharacter = async (index) => {
+  characters.value.splice(index, 1); // Удаляем элемент по индексу
+
+  // Обновляем Swiper после удаления элемента
+  await nextTick(() => {
+    characters.value = [...characters.value]; // Форсируем обновление массива
+    if (characters.value.length > 0) {
+      cardSwiper.value?.swipeNext(); // Переходим к следующему слайду
+    }
+  });
+};
+
+console.log("removeCharacter", removeCharacter);
 </script>
 
 <style scoped lang="scss">

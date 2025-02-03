@@ -204,25 +204,25 @@ export default {
 
 .modal-buttons {
   display: flex;
-  justify-content: space-between;
-  gap: 10px;
+  justify-content: center;
+  gap: 31px;
   margin-top: 15px;
 }
 
 .modal-button {
-  padding: 10px 20px;
+  padding: 10px 50px;
   border: none;
   border-radius: 4px;
   font-size: 14px;
   cursor: pointer;
 
   &--confirm {
-    background-color: #d9534f;
+    background-color: red;
     color: #fff;
   }
 
   &--cancel {
-    background-color: #5bc0de;
+    background-color: #3c41a1;
     color: #fff;
   }
 }
