@@ -4,56 +4,71 @@
     <div v-else-if="characters.length === 0" class="no-items">
       No more items to show.
     </div>
-    <CardSwiper v-else :items="characters" ref="cardSwiper">
-      <template #default="{ item, index }">
-        <div class="overview__image-container">
-          <img
-            :src="item.image"
-            :alt="'Image ' + index"
-            class="overview__image"
-            loading="lazy"
-          />
-          <div class="overview__text-container">
-            <h2 class="overview__name">{{ item.name }}</h2>
-            <p class="overview__description">
-              species: {{ item.species || "Описание нашего персонажа" }}
-            </p>
-            <div class="overview__buttons-container">
-              <button
-                class="overview__button overview__button--close"
-                @click="onclickDislike"
-              >
-                ✖
-              </button>
-              <button
-                class="overview__button overview__button--like"
-                @click="onclickLike(item)"
-              >
-                ❤
-              </button>
+
+    <div v-else>
+      <!-- <div class="like">{{ like ? "Like" : "Nope" }}</div> -->
+      <CardSwiper :items="characters" ref="cardSwiper">
+        <template #default="{ item, index }">
+          <div class="overview__image-container">
+            <img
+              :src="item.image"
+              :alt="'Image ' + index"
+              class="overview__image"
+              loading="lazy"
+            />
+            <div class="overview__text-container">
+              <h2 class="overview__name">{{ item.name }}</h2>
+              <p class="overview__description">
+                species: {{ item.species || "Описание нашего персонажа" }}
+              </p>
+
+              <div class="overview__buttons-container">
+                <button
+                  class="overview__button overview__button--close"
+                  @click="onclickDislike"
+                >
+                  ✖
+                </button>
+                <button
+                  class="overview__button overview__button--like"
+                  @click="onclickLike(item)"
+                >
+                  ❤
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      </template>
-    </CardSwiper>
+          <!-- Плашка "Nope" -->
+          <div class="swipe-label swipe-label--nope" v-if="showNope">NOPE</div>
+          <!-- Плашка "Like" -->
+          <div class="swipe-label swipe-label--like" v-if="showLike">LIKE</div>
+        </template>
+      </CardSwiper>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from "vue";
 import { useStore } from "vuex";
-import CardSwiper from "../ui/Swiper/Swiper.vue";
+import CardSwiper from "../ui/Swiper/Swiper.vue"; // Импортируем компонент
 
+// Хранилище Vuex
 const store = useStore();
 
+// Состояния
 const isLoading = ref(true);
-const characters = ref([]);
-const cardSwiper = ref(null);
+const characters = ref([]); // Используем ref для управления списком
+const cardSwiper = ref(null); // Ссылка на компонент CardSwiper
+const showLike = ref(false); // Показывать плашку "Like"
+const showNope = ref(false); // Показывать плашку "Nope"
 
+// Загрузка данных
 onMounted(async () => {
   try {
     await store.dispatch("fetchItems");
     await store.dispatch("loadFavoritesFromLocalStorage");
+    // Инициализируем characters данными из хранилища
     characters.value = [...store.getters.getItems];
   } catch (e) {
     console.log("Failed to load data:", e);
@@ -62,35 +77,76 @@ onMounted(async () => {
   }
 });
 
+// Лайк
 const onclickLike = async (character, index) => {
+  showLike.value = true;
+  setTimeout(() => {
+    showLike.value = false;
+  }, 1000); // Плашка исчезает через 500 мс
+
   try {
     await store.dispatch("addToFavorites", character);
   } catch (e) {
     console.error("Failed to add to favorites:", e);
   }
-  removeCharacter(index);
+  removeCharacter(index); // Удаляем персонажа из списка
+  cardSwiper.value?.swipeNext(); // Переходим к следующему слайду
 };
 
+// Дизлайк
 const onclickDislike = (index) => {
-  removeCharacter(index);
+  showNope.value = true;
+  setTimeout(() => {
+    showNope.value = false;
+  }, 1000); // Плашка исчезает через 500 мс
+
+  removeCharacter(index); // Удаляем персонажа из списка
+  cardSwiper.value?.swipeNext(); // Переходим к следующему слайду
 };
 
-const removeCharacter = async (index) => {
+// Удаление персонажа из списка
+const removeCharacter = (index) => {
   characters.value.splice(index, 1); // Удаляем элемент по индексу
-
-  // Обновляем Swiper после удаления элемента
-  await nextTick(() => {
-    characters.value = [...characters.value]; // Форсируем обновление массива
-    if (characters.value.length > 0) {
-      cardSwiper.value?.swipeNext(); // Переходим к следующему слайду
-    }
-  });
 };
-
-console.log("removeCharacter", removeCharacter);
 </script>
-
 <style scoped lang="scss">
+.swipe-label {
+  position: absolute;
+  top: 20px;
+  font-size: 32px;
+  font-weight: bold;
+  color: white;
+  padding: 10px 20px;
+  border: 3px solid;
+  border-radius: 5px;
+  z-index: 100;
+  opacity: 0;
+  animation: fadeIn 0.3s ease-in-out forwards;
+
+  &--like {
+    right: 20px;
+    border-color: green;
+    background-color: rgba(0, 128, 0, 0.7);
+  }
+
+  &--nope {
+    left: 20px;
+    border-color: red;
+    background-color: rgba(255, 0, 0, 0.7);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 .overview {
   width: 100%;
   max-width: 800px;
