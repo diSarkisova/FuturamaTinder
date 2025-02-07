@@ -139,7 +139,7 @@ export default {
   &__image {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     border-radius: 8px;
   }
 
@@ -149,17 +149,17 @@ export default {
     left: 0;
     width: 100%;
     padding: 5px;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(var(--black)) 0.5;
     text-align: center;
     border-radius: 0 0 8px 8px;
   }
 
   &__name {
-    color: white;
+    color: rgb(var(--white));
   }
 
   &__description {
-    color: white;
+    color: rgb(var(--white));
     font-size: 16px;
     font-weight: bold;
     font-weight: 300;
@@ -170,35 +170,35 @@ export default {
     max-width: 500px;
     padding: 10px 20px;
     font-size: 16px;
-    border: 2px solid #3a55ac;
+    border: 2px solid rgb(var(--favorites-border));
     border-radius: 50px;
     outline: none;
     background: linear-gradient(
       45deg,
-      rgba(92, 107, 192, 0.5),
-      rgba(255, 255, 255, 0.2)
+      rgba(var(--favorites-input-bg-primary), 0.5),
+      rgba(var(--favorites-input-bg-secondary), 0.2)
     );
-    color: black;
+    color: rgb(var(--black));
     transition: all 0.3s ease;
     font-weight: 300;
   }
 
   &__input::placeholder {
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(var(--white), 0.7);
   }
 
   &__input:focus {
-    border-color: #5c6bc0;
+    border-color: rgb(var(--favorites-input-bg-primary));
     background: linear-gradient(
       45deg,
-      rgba(92, 107, 192, 0.7),
-      rgba(255, 255, 255, 0.4)
+      rgba(var(--favorites-input-bg-primary), 0.7),
+      rgba(var(--favorites-input-bg-secondary), 0.4)
     );
-    box-shadow: 0 0 8px rgba(92, 107, 192, 0.4);
+    box-shadow: 0 0 8px rgba(var(--favorites-input-bg-primary), 0.4);
   }
 
   &__input:focus::placeholder {
-    color: rgba(92, 107, 192, 1);
+    color: rgb(var(--favorites-input-bg-primary));
   }
 }
 
@@ -215,15 +215,33 @@ export default {
   border-radius: 4px;
   font-size: 14px;
   cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.1s ease,
+    box-shadow 0.3s ease;
 
   &--confirm {
-    background-color: red;
-    color: #fff;
+    background-color: rgb(var(--favorites-btn--bg-active));
+    color: rgb(var(--white));
+
+    &:hover {
+      background-color: rgba(var(--favorites-btn--bg-active), 0.5);
+    }
+
+    &:active {
+      background-color: rgba(var(--favorites-btn--bg-active), 0.8);
+      transform: scale(0.98);
+      box-shadow: 0 2px 4px rgba(var(--black), 0.2);
+    }
   }
 
   &--cancel {
-    background-color: #3c41a1;
-    color: #fff;
+    background-color: rgb(var(--favorites-btn--bg-cancel));
+    color: rgb(var(--white));
+
+    &:active {
+      background-color: rgba(var(--favorites-btn--bg-cancel), 0.8);
+      transform: scale(0.98);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
   }
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div class="profile">
-    <CirclePreview />
+    <CirclePreview  />
     <h1 class="profile__title">Profile</h1>
     <div class="profile__details">
       <div class="profile__field">
@@ -55,18 +55,17 @@ export default {
   max-width: 500px;
   margin: 0 auto;
   padding: 20px;
-  background-color: rgb(225 215 215 / 50%);
+  background-color: rgba(var(--profile-bg), 0.5);
   border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  color: #fff;
-  font-family: Arial, sans-serif;
+  box-shadow: 0 4px 10px rgba(var(--black), 0.3);
+  color: rgb(var(--white));
   gap: 25px;
 
   &__title {
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 20px;
-    color: #f0f0f0;
+    color: rgb(var(--white));
   }
 
   &__details {
@@ -81,21 +80,19 @@ export default {
     justify-content: space-between;
     align-items: center;
     padding: 10px 15px;
-    background-color: rgb(0 0 0 / 50%);
+    background-color: rgba(var(--black), 0.5);
     border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 5px rgba(var(--black), 0.2);
   }
 
   &__label {
     font-size: 16px;
-    font-weight: bold;
-    color: #a0a0a0;
+    color: rgb(var(--white));
   }
 
   &__value {
     font-size: 16px;
-    font-weight: normal;
-    color: #f0f0f0;
+    color: rgb(var(--white));
     word-break: break-word;
   }
 }

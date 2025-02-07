@@ -75,9 +75,13 @@ async function userAuth() {
   flex-direction: column;
   width: 100%;
   height: 100vh;
-  background: linear-gradient(to bottom, #2162bc, #461280);
+  background: linear-gradient(
+    to bottom,
+    rgb(var(--login-primary-bg)),
+    rgb(var(--login-secondary-bg))
+  );
   padding: 40px;
-  color: white;
+  color: rgb(var(--white));
 
   &__layout-container {
     display: flex;
@@ -93,7 +97,7 @@ async function userAuth() {
 
     .login__label {
       margin-bottom: 8px;
-      color: white;
+      color: rgb(var(--white));
       font-size: 16px;
       font-weight: 500;
       padding-left: 10px;
@@ -105,15 +109,15 @@ async function userAuth() {
       max-width: 500px;
       padding: 10px 20px;
       font-size: 16px;
-      border: 2px solid #3a55ac;
+      border: 2px solid rgb(var(--login-border));
       border-radius: 50px;
       outline: none;
       background: linear-gradient(
         45deg,
-        rgba(255, 255, 255, 0.45),
-        rgba(255, 255, 255, 0.2)
+        rgba(var(--white), 0.45),
+        rgba(var(--white), 0.2)
       );
-      color: #ffffff;
+      color: rgb(var(--white));
       transition: all 0.3s ease;
     }
 
@@ -123,18 +127,18 @@ async function userAuth() {
 
     .login__input::placeholder,
     .password-input::placeholder {
-      color: rgba(255, 255, 255, 0.7);
+      color: rgba(var(--white), 0.7);
     }
 
     .login__input:focus,
     .password-input:focus {
-      border-color: #5c6bc0;
+      border-color: rgb(var(--login-border-focus));
       background: linear-gradient(
         45deg,
-        rgba(92, 107, 192, 0.7),
-        rgba(255, 255, 255, 0.4)
+        rgba(var(--login-border-focus), 0.7),
+        rgba(var(--white), 0.4)
       );
-      box-shadow: 0 0 8px rgba(92, 107, 192, 0.4);
+      box-shadow: 0 0 8px rgba(var(--login-border-focus), 0.4);
     }
   }
 }
@@ -152,11 +156,11 @@ async function userAuth() {
   max-width: 500px;
   padding: 10px 20px;
   font-size: 16px;
-  border: 2px solid #3a55ac;
+  border: 2px solid rgb(var(--login-border));
   border-radius: 50px;
   outline: none;
-  background: linear-gradient(45deg, rgb(255 255 255), rgb(242 242 242));
-  color: black;
+  background: linear-gradient(45deg, rgb(var(--white)), rgb(var(--white)));
+  color: rgb(var(--black));
   transition: all 0.3s ease;
 }
 </style>

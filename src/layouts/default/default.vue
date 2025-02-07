@@ -3,7 +3,7 @@
     <header class="default-layout__header">
       <router-link class="default-layout__wrapper" to="/">
         <TheLogo class="default-layout-logo" />
-        <h1 class="default-layout-title">FuturamaMatch</h1>
+        <h1 class="default-layout__title">FuturamaMatch</h1>
       </router-link>
 
       <div class="default-layout__container">
@@ -31,7 +31,7 @@
 import TheLogo from "../../components/TheLogo/TheLogo.vue";
 import CirclePreview from "../../components/CirclePreview/CirclePreview.vue";
 import { useStore } from "vuex";
-import { computed, onMounted } from "vue";
+import { computed } from "vue";
 
 const store = useStore();
 
@@ -53,14 +53,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.default-layout-title {
-  font-size: 15px;
-  font-weight: 400;
-
-  @media only screen and (max-width: 750px) {
-    display: none;
-  }
-}
 .default-layout {
   display: flex;
   flex-direction: column;
@@ -79,6 +71,11 @@ export default {
   &__title {
     font-size: 15px;
     font-weight: 400;
+    color: rgb(var(--white));
+
+    @media only screen and (max-width: 750px) {
+      display: none;
+    }
   }
 
   &__wrapper {
@@ -87,7 +84,6 @@ export default {
     align-items: center;
     height: 100%;
     width: 100%;
-    color: white;
   }
 
   &__container {
@@ -112,8 +108,8 @@ export default {
     padding: 20px;
     background-image: linear-gradient(
       to bottom,
-      rgba(0, 0, 0, 0) 0%,
-      rgba(0, 0, 0, 0.8) 100%
+      rgba(var(--black), 0),
+      rgba(var(--black), 0.8) 100%
     );
   }
 
@@ -122,11 +118,11 @@ export default {
     transition: color 0.3s ease;
 
     &:hover {
-      color: red;
+      color: rgb(var(--icon-hover));
     }
 
     &.router-link-exact-active {
-      color: red;
+      color: rgb(var(--icon-hover));
     }
   }
 }

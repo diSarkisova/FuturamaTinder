@@ -6,7 +6,6 @@
     </div>
 
     <div v-else>
-      <!-- <div class="like">{{ like ? "Like" : "Nope" }}</div> -->
       <CardSwiper :items="characters" ref="cardSwiper">
         <template #default="{ item, index }">
           <div class="overview__image-container">
@@ -24,7 +23,7 @@
 
               <div class="overview__buttons-container">
                 <button
-                  class="overview__button overview__button--close"
+                  class="overview__button overview__button--dislike"
                   @click="onclickDislike"
                 >
                   ✖
@@ -49,7 +48,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 import CardSwiper from "../ui/Swiper/Swiper.vue"; // Импортируем компонент
 
@@ -58,10 +57,10 @@ const store = useStore();
 
 // Состояния
 const isLoading = ref(true);
-const characters = ref([]); // Используем ref для управления списком
-const cardSwiper = ref(null); // Ссылка на компонент CardSwiper
-const showLike = ref(false); // Показывать плашку "Like"
-const showNope = ref(false); // Показывать плашку "Nope"
+const characters = ref([]); 
+const cardSwiper = ref(null); 
+const showLike = ref(false); 
+const showNope = ref(false); 
 
 // Загрузка данных
 onMounted(async () => {
@@ -107,6 +106,7 @@ const onclickDislike = (index) => {
 // Удаление персонажа из списка
 const removeCharacter = (index) => {
   characters.value.splice(index, 1); // Удаляем элемент по индексу
+  cardSwiper.value?.swipeNext();
 };
 </script>
 <style scoped lang="scss">
@@ -115,7 +115,7 @@ const removeCharacter = (index) => {
   top: 20px;
   font-size: 32px;
   font-weight: bold;
-  color: white;
+  color: rgb(var(--white));
   padding: 10px 20px;
   border: 3px solid;
   border-radius: 5px;
@@ -125,14 +125,14 @@ const removeCharacter = (index) => {
 
   &--like {
     right: 20px;
-    border-color: green;
-    background-color: rgba(0, 128, 0, 0.7);
+    border-color: rgb(var(--overwiview-swipe-like));
+    background-color: rgba(var(--overwiview-swipe-like), 0.7);
   }
 
   &--nope {
     left: 20px;
-    border-color: red;
-    background-color: rgba(255, 0, 0, 0.7);
+    border-color: rgb(var(--overwiview-swipe-dislike));
+    background-color: rgba(var(--overwiview-swipe-dislike), 0.7);
   }
 }
 
@@ -176,10 +176,10 @@ const removeCharacter = (index) => {
     padding: 10px;
     background-image: linear-gradient(
       to bottom,
-      rgba(0, 0, 0, 0) 0%,
-      rgba(0, 0, 0, 0.8) 100%
+      rgba(var(--black), 0) 0%,
+      rgba(var(--black), 0.8) 100%
     );
-    color: white;
+    color: rgb(var(--white));
     font-size: 16px;
     text-align: center;
     border-radius: 0 0 18px 18px;
@@ -209,9 +209,8 @@ const removeCharacter = (index) => {
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    border: 2px solid #fff;
+    border: 3px solid;
     background-color: transparent;
-    color: #fff;
     font-size: 20px;
     display: flex;
     align-items: center;
@@ -219,21 +218,23 @@ const removeCharacter = (index) => {
     cursor: pointer;
     transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
 
-    &:active {
-      transform: scale(1.1);
-      color: red;
-    }
-
-    &--close {
-      border-color: red;
+    &--dislike {
+      border-color: rgb(var(--overwiview-dislike-btn));
+      color: rgb(var(--overwiview-dislike-btn));
     }
 
     &--like {
-      border-color: rgb(76, 214, 181);
+      border-color: rgb(var(--overwiview-like-btn));
+      color: rgb(var(--overwiview-like-btn));
+    }
+
+    &:active {
+      transform: scale(1.1);
+      color: rgb(var(--white));
     }
 
     &:hover {
-      background-color: rgba(255, 255, 255, 0.2);
+      background-color: rgba(255, 255, 255, 0.2); ///
     }
   }
 }
@@ -243,7 +244,7 @@ const removeCharacter = (index) => {
   align-items: center;
   justify-content: center;
   height: 460px;
-  color: white;
+  color: rgb(var(--white));
   font-size: 18px;
   flex-direction: column;
   gap: 15px;
@@ -253,9 +254,9 @@ const removeCharacter = (index) => {
     display: inline-block;
     width: 35px;
     height: 35px;
-    border: 3px solid rgba(255, 255, 255, 0.3);
+    border: 3px solid rgba(var(--loading-border), 0.3);
     border-radius: 50%;
-    border-top-color: #fff;
+    border-top-color: rgb(var(--white));
     animation: spin 1s linear infinite;
     margin-left: 10px;
   }
