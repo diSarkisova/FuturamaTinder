@@ -1,6 +1,5 @@
 <template>
   <div class="profile">
-    <CirclePreview  />
     <h1 class="profile__title">Profile</h1>
     <div class="profile__details">
       <div class="profile__field">
@@ -30,12 +29,9 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { useStore } from "vuex";
-import CirclePreview from "../components/CirclePreview/CirclePreview.vue";
 
-// Подключаем Vuex Store
 const store = useStore();
 
-// Геттер для получения данных пользователя
 const user = computed(() => store.state.user || {});
 </script>
 

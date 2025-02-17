@@ -1,5 +1,3 @@
-import { createStore } from "vuex";
-
 export default {
   state: () => ({
     name: localStorage.getItem('name') || "",
@@ -7,7 +5,6 @@ export default {
     email: localStorage.getItem('email') || "",
     username: localStorage.getItem('username') || "",
     password: localStorage.getItem('password') || "",
-    // token: "", // Сохранение токена при успешной регистрации (если нужно)
   }),
 
   mutations: {
@@ -31,13 +28,9 @@ export default {
       state.password = password;
       localStorage.setItem('password', password);
     },
-    // setToken(state, token) {
-    //   state.token = token;
-    // },
   },
 
   actions: {
-    // Действие для регистрации пользователя
     async register({ commit }, { name, surname, email, username, password }) {
       try {
         const response = await fetch("https://futuramaapi.com/api/users", {
@@ -54,10 +47,6 @@ export default {
           }),
         });
 
-        // if (!response.ok) {
-        //   throw new Error(`HTTP error! Status: ${response.status}`);
-        // }
-
         const data = await response.json();
         
         commit("setName", name);
@@ -65,16 +54,8 @@ export default {
         commit("setEmail", email);
         commit("setUsername", username);
         commit("setPassword", password);
-
-        // if (data.token) {
-        //   commit("setToken", data.token); // Сохраняем токен, если он есть
-        //   console.log("User registered successfully:", data);
-        // } else {
-        //   throw new Error("Token is missing in response");
-        // }
       } catch (error) {
         console.error("Ошибка регистрации:", error);
-        // throw error;
       }
     },
   },

@@ -1,12 +1,10 @@
-import { createStore } from "vuex";
-
 export default {
   state: () => ({
-    items: [], // Персонажи, загруженные с API
+    items: [],
   }),
   mutations: {
     SET_ITEMS(state, items) {
-      state.items = items || []; // Обновляем список персонажей
+      state.items = items || [];
     },
   },
   actions: {
@@ -22,7 +20,7 @@ export default {
   },
   getters: {
     getItems(state) {
-      return state.items; // Возвращаем все элементы из массива
+      return state.items;
     },
   },
 };

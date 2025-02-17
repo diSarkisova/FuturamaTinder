@@ -24,13 +24,13 @@
               <div class="overview__buttons-container">
                 <button
                   class="overview__button overview__button--dislike"
-                  @click="onclickDislike"
+                  @click="onclickDislike(index)"
                 >
                   ✖
                 </button>
                 <button
                   class="overview__button overview__button--like"
-                  @click="onclickLike(item)"
+                  @click="onclickLike(item, index)"
                 >
                   ❤
                 </button>
@@ -50,19 +50,16 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
-import CardSwiper from "../ui/Swiper/Swiper.vue"; // Импортируем компонент
+import CardSwiper from "../ui/Swiper/Swiper.vue";
 
-// Хранилище Vuex
 const store = useStore();
 
-// Состояния
 const isLoading = ref(true);
 const characters = ref([]); 
 const cardSwiper = ref(null); 
 const showLike = ref(false); 
 const showNope = ref(false); 
 
-// Загрузка данных
 onMounted(async () => {
   try {
     await store.dispatch("fetchItems");
@@ -76,34 +73,31 @@ onMounted(async () => {
   }
 });
 
-// Лайк
 const onclickLike = async (character, index) => {
   showLike.value = true;
   setTimeout(() => {
     showLike.value = false;
-  }, 1000); // Плашка исчезает через 500 мс
+  }, 1000);
 
   try {
     await store.dispatch("addToFavorites", character);
   } catch (e) {
     console.error("Failed to add to favorites:", e);
   }
-  removeCharacter(index); // Удаляем персонажа из списка
-  cardSwiper.value?.swipeNext(); // Переходим к следующему слайду
+  removeCharacter(index);
+  cardSwiper.value?.swipeNext();
 };
 
-// Дизлайк
 const onclickDislike = (index) => {
   showNope.value = true;
   setTimeout(() => {
     showNope.value = false;
-  }, 1000); // Плашка исчезает через 500 мс
+  }, 1000);
 
-  removeCharacter(index); // Удаляем персонажа из списка
-  cardSwiper.value?.swipeNext(); // Переходим к следующему слайду
+  removeCharacter(index);
+  cardSwiper.value?.swipeNext();
 };
 
-// Удаление персонажа из списка
 const removeCharacter = (index) => {
   characters.value.splice(index, 1); // Удаляем элемент по индексу
   cardSwiper.value?.swipeNext();
@@ -234,7 +228,7 @@ const removeCharacter = (index) => {
     }
 
     &:hover {
-      background-color: rgba(255, 255, 255, 0.2); ///
+      background-color: rgba(var(--white), 0.2);
     }
   }
 }

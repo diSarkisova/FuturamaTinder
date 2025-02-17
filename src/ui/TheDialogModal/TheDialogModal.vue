@@ -28,7 +28,7 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(var(--modal-overlay-bg), 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -40,9 +40,9 @@ export default {
   border-radius: 8px;
   width: 90%;
   max-width: 400px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 10px rgba(var(--black), 0.2);
   position: relative;
-  background-color: rgb(255 255 255 / 96%);
+  background-color: rgba(var(--modal-bt-bg), 0.96);
 }
 
 .modal-close {
@@ -53,5 +53,10 @@ export default {
   border: none;
   font-size: 20px;
   cursor: pointer;
+  transition: color 0.3s;
+}
+
+.modal-close:hover {
+  color: rgb(var(--modal-bt-hover));
 }
 </style>

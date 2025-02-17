@@ -59,44 +59,37 @@ import UiDialogModal from "../ui/TheDialogModal/TheDialogModal.vue";
 const store = useStore();
 const filterTable = ref("");
 
-// Состояние для показа модалки
 const showModal = ref(false);
-const favoriteIdToRemove = ref<string | null>(null); // Храним id того элемента, который хотим удалить
+const favoriteIdToRemove = ref<string | null>(null);
 
-// Фильтрация избранных по имени
 const filteredFavorites = computed(() => {
   return favorites.value.filter((favorite) =>
     favorite.name.toLowerCase().includes(filterTable.value.toLowerCase())
   );
 });
 
-// Геттер для получения избранных персонажей из Vuex
 const favorites = computed(() => store.getters.getFavorites);
 
-// Загружаем избранных из localStorage при монтировании компонента
 onMounted(() => {
   store.dispatch("loadFavoritesFromLocalStorage");
 });
 
-// Открытие модалки и передача ID элемента
 const openModal = (id: string) => {
-  favoriteIdToRemove.value = id; // Запоминаем ID для удаления
-  showModal.value = true; // Открываем модалку
+  favoriteIdToRemove.value = id;
+  showModal.value = true;
 };
 
-// Подтверждение удаления
 const confirmRemove = () => {
   if (favoriteIdToRemove.value) {
-    store.dispatch("removeFromFavorites", favoriteIdToRemove.value); // Удаляем из Vuex store
+    store.dispatch("removeFromFavorites", favoriteIdToRemove.value);
   }
-  showModal.value = false; // Закрываем модалку
-  favoriteIdToRemove.value = null; // Сбрасываем значение
+  showModal.value = false;
+  favoriteIdToRemove.value = null; 
 };
 
-// Отмена удаления
 const cancelRemove = () => {
-  showModal.value = false; // Закрываем модалку
-  favoriteIdToRemove.value = null; // Сбрасываем значение
+  showModal.value = false;
+  favoriteIdToRemove.value = null;
 };
 </script>
 

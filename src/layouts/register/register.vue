@@ -71,7 +71,6 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 
-// Создаем реактивный объект для хранения данных
 const store = useStore();
 const registerData = reactive({
   name: "",
@@ -81,9 +80,7 @@ const registerData = reactive({
   password: "",
 });
 
-// Функция для отправки данных на сервер для регистрации
 async function userRegister() {
-  // Проверка, чтобы все обязательные поля были заполнены
   if (
     !registerData.name ||
     !registerData.surname ||
@@ -96,7 +93,6 @@ async function userRegister() {
   }
 
   try {
-    // Отправляем данные на сервер через Vuex
     await store.dispatch("register", registerData);
     await router.push({ path: "/" });
     console.log("User registered successfully");

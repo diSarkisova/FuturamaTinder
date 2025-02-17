@@ -7,23 +7,23 @@
     <form @submit.prevent="userAuth">
       <div class="login__layout-container">
         <div class="input-container">
-          <label for="login" class="login__label"> Логин</label>
+          <label for="login" class="login__label"> Login</label>
           <input
             v-model="loginData.username"
-            placeholder="Введите логин"
+            placeholder="Enter login"
             class="login__input"
           />
 
-          <label for="password" class="login__label">Пароль</label>
+          <label for="password" class="login__label">Password</label>
           <input
             v-model="loginData.password"
-            placeholder="Введите Пароль"
+            placeholder="Enter password"
             class="password-input"
           />
         </div>
       </div>
       <div class="form__action">
-        <button type="submit" class="form__action-button">Войти</button>
+        <button type="submit" class="form__action-button">Sign in</button>
       </div>
     </form>
   </div>
@@ -50,7 +50,6 @@ const loginData = reactive({
 });
 
 async function userAuth() {
-  // проверка на пустые поля
   if (!loginData.username || !loginData.password) {
     console.log("не введены логин и пароль");
     return;

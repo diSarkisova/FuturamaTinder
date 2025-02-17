@@ -25,25 +25,20 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/swiper-bundle.css";
 import { EffectCards } from "swiper/modules";
 
-// Модули Swiper
 const modules = [EffectCards];
 
-// Ссылка на Swiper
 const swiperRef = ref(null);
 
-// Обработчик инициализации Swiper
 const onSwiper = (swiper) => {
   swiperRef.value = swiper;
 };
 
-// Пробрасываем метод для переключения слайдов
 const swipeNext = () => {
   if (swiperRef.value?.swiper) {
     swiperRef.value.slideNext();
   }
 };
 
-// Пропсы
 defineProps({
   items: {
     type: Array,
@@ -51,7 +46,6 @@ defineProps({
   },
 });
 
-// Экспортируем метод для использования в родительском компоненте
 defineExpose({
   swipeNext,
 });
@@ -73,7 +67,7 @@ defineExpose({
     border-radius: 18px;
     font-size: 22px;
     font-weight: bold;
-    color: #fff;
+    color: rgb(var(--white));
     transition: transform 0.5s ease, opacity 0.5s ease;
   }
 }

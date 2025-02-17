@@ -1,45 +1,42 @@
-import { createStore } from "vuex";
-
 export default {
     state: () => ({
-      favorites: [], // Список избранных
+      favorites: [],
     }),
     mutations: {
     ADD_TO_FAVORITES(state, item) {
-      // Проверяем уникальность по id (если у объектов есть уникальные id)
       if (!state.favorites.some(fav => fav.id === item.id)) {
-        state.favorites.push(item); // Добавляем персонажа в избранные
+        state.favorites.push(item);
       }
     },
     REMOVE_FROM_FAVORITES(state, itemId) {
-      state.favorites = state.favorites.filter(fav => fav.id !== itemId); // Удаляем персонажа из избранного
+      state.favorites = state.favorites.filter(fav => fav.id !== itemId); 
     },
     SET_FAVORITES(state, favorites) {
-      state.favorites = favorites || []; // Загружаем избранных из localStorage
+      state.favorites = favorites || []; 
     },
     },
     actions: {
     addToFavorites({ commit }, item) {
-      commit('ADD_TO_FAVORITES', item); // Добавляем персонажа в избранное
-      this.dispatch('saveFavoritesToLocalStorage'); // Сохраняем избранных в localStorage
+      commit('ADD_TO_FAVORITES', item); 
+      this.dispatch('saveFavoritesToLocalStorage');
     },
     removeFromFavorites({ commit }, itemId) {
-      commit('REMOVE_FROM_FAVORITES', itemId); // Удаляем персонажа из избранного
-      this.dispatch('saveFavoritesToLocalStorage'); // Сохраняем избранных в localStorage
+      commit('REMOVE_FROM_FAVORITES', itemId);
+      this.dispatch('saveFavoritesToLocalStorage');
     },
     saveFavoritesToLocalStorage({ state }) {
-      localStorage.setItem('favorites', JSON.stringify(state.favorites)); // Сохраняем избранных в localStorage
+      localStorage.setItem('favorites', JSON.stringify(state.favorites));
     },
     loadFavoritesFromLocalStorage({ commit }) {
       const savedFavorites = localStorage.getItem('favorites');
       if (savedFavorites) {
-        commit('SET_FAVORITES', JSON.parse(savedFavorites)); // Загружаем избранных из localStorage
+        commit('SET_FAVORITES', JSON.parse(savedFavorites)); 
       }
     },
 },
     getters: {
     getFavorites(state) {
-        return state.favorites; // Возвращаем все избранные элементы
+        return state.favorites;
     },
   },
 };
