@@ -1,9 +1,37 @@
-$white-400: #FFF;
+:root {
+--white: 255, 255, 255;
+--black: 0, 0, 0;
 
-$black-400: #0000;
+--icon-hover: 255, 0, 0;
 
-$grey-400: #C4C4C4;
-$grey-300: #E8E8E8;
-$grey-200: #F6F6F6;
+--login-primary-bg: 33, 98, 188;
+--login-secondary-bg: 70, 18, 128;
+--login-border: 58, 85, 172;
+--login-border-focus: 92, 107, 192;
 
-$green-400: #5DB075;
+
+--register-layout-primary: 33, 98, 188;
+--register-layout-secondary: 70, 18, 128;
+--register-border: 58, 85, 172;
+--register-border-focus: 92, 107, 192;
+--register-bg-focus: 92, 107, 192;
+--register-input: 255, 255, 255;
+
+--favorites-border: 58, 85, 172;
+--favorites-input-bg-primary: 92, 107, 192;
+--favorites-input-bg-secondary: 255, 255, 255;
+--favorites-btn--bg-active: 255, 0, 0;
+--favorites-btn--bg-cancel: 60, 65, 161;
+
+--overwiview-btn-active: 0, 128, 0;
+--overwiview-like-btn:  76, 214, 181;
+--overwiview-dislike-btn:  255, 0, 0;
+--overwiview-swipe-like: 76, 214, 181;
+--overwiview-swipe-dislike: 255, 0, 0;
+
+
+--loading-border: 255, 255, 255;
+
+--profile-bg: 76, 214, 181;
+
+}

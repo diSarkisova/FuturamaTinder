@@ -1,26 +1,28 @@
+import { createStore } from "vuex";
+
 export default {
   state: () => ({
-    characters: "null",
+    items: [], // Персонажи, загруженные с API
   }),
   mutations: {
-    SET_CHARACTERS(state, characters) {
-      state.characters = characters;
+    SET_ITEMS(state, items) {
+      state.items = items || []; // Обновляем список персонажей
     },
   },
   actions: {
-    async fetchCharacters({ commit }) {
+    async fetchItems({ commit }) {
       try {
-        const response = await fetch(
-          "https://api.sampleapis.com/futurama/characters",
-          {
-            method: "GET",
-          },
-        );
-        const characters = await response.json();
-        commit("SET_CHARACTERS", characters);
-      } catch (e) {
-        console.log(e);
+        const response = await fetch('https://futuramaapi.com/api/characters');
+        const data = await response.json();
+        commit('SET_ITEMS', data.items || []);
+      } catch (error) {
+        console.error('Ошибка при загрузке данных:', error);
       }
+    },
+  },
+  getters: {
+    getItems(state) {
+      return state.items; // Возвращаем все элементы из массива
     },
   },
 };

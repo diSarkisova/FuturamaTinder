@@ -1,14 +1,14 @@
 <template>
   <a class="logo__link">
     <img
-      src="../assets/icons/logo.svg"
+      src="../../assets/icons/logo.svg"
       alt="Futurama Tinder"
       class="logo__picture"
     />
   </a>
 </template>
 
-<script setup></script>
+<script setup lang="ts"></script>
 
 <style scoped>
 .logo__picture {
@@ -16,5 +16,3 @@
   height: 78px;
 }
 </style>
-
-<!--<a :href="" class="logo__link">-->
